@@ -49,5 +49,3 @@ class VisitorTest(FunctionalTest):
         self.assertEqual(current_url, expected_url)
 
         self.browser.quit()
-
-        self.fail("Finish test!")
