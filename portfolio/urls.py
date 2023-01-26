@@ -15,9 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from portfolio_app import views as portfolio_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('/', include('portfolio_app.urls')),
+    path('todo/', include('todo.urls')),
 ]

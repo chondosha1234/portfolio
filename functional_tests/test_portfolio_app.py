@@ -43,7 +43,7 @@ class VisitorTest(FunctionalTest):
         # app functionality will be tested separately
 
         # user can click home button on navbar to return to home page
-        self.broswer.find_element(By.LINK_TEXT, 'Home').click()
+        self.browser.find_element(By.LINK_TEXT, 'Home').click()
         current_url = self.browser.current_url
         expected_url = self.live_server_url + reverse('home')
         self.assertEqual(current_url, expected_url)
