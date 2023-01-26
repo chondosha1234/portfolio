@@ -19,5 +19,5 @@ from portfolio_app import views as portfolio_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', portfolio_views.home_page, name='home'),
+    path('/', include('portfolio_app.urls')),
 ]
