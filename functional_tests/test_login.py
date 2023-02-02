@@ -19,11 +19,11 @@ class LoginTest(FunctionalTest):
         self.assertRegex(current_page_url, '/accounts/login')
 
         # There is a field for username/email and password
-        username = self.browser.find_element(By.NAME, 'username')
+        email = self.browser.find_element(By.NAME, 'email')
         password = self.browser.find_element(By.NAME, 'password')
         self.assertEqual(
-            username.get_attribute('placeholder'),
-            'Username'
+            email.get_attribute('placeholder'),
+            'Email'
         )
 
         # under the fields there is a link to create new account
@@ -34,7 +34,7 @@ class LoginTest(FunctionalTest):
         self.assertRegex(current_page_url, '/accounts/create_account')
 
         # the page is now for entering new account name and 2 password fields
-        self.browser.find_element(By.NAME, 'username')
+        self.browser.find_element(By.NAME, 'email')
         self.browser.find_element(By.NAME, 'password')
         self.browser.find_element(By.NAME, 'confirm_password')
 
@@ -50,12 +50,12 @@ class LoginTest(FunctionalTest):
         current_page_url = self.browser.current_url
         self.assertRegex(current_page_url, '/accounts/create_account')
 
-        username = self.browser.find_element(By.NAME, 'username')
+        email = self.browser.find_element(By.NAME, 'email')
         password = self.browser.find_element(By.NAME, 'password')
         confirm_pwd = self.browser.find_element(By.NAME, 'confirm_password')
         submit = self.browser.find_element(By.CSS_SELECTOR, '.btn')
 
-        username.send_keys("user1234")
+        email.send_keys("user1234@example.org")
         password.send_keys("password1234")
         confirm_pwd.send_keys("password1234")
         submit.click()
@@ -66,11 +66,11 @@ class LoginTest(FunctionalTest):
         self.assertRegex(current_page_url, '/accounts/login')
 
         # user enters new login information and is taken to home page
-        username = self.browser.find_element(By.NAME, 'username')
+        email = self.browser.find_element(By.NAME, 'email')
         password = self.browser.find_element(By.NAME, 'password')
         submit = self.browser.find_element(By.CSS_SELECTOR, '.btn')
 
-        username.send_keys("user1234")
+        email.send_keys("user1234@example.org")
         password.send_keys("password1234")
         submit.click()
 
@@ -78,12 +78,13 @@ class LoginTest(FunctionalTest):
 
         # user can now see in the top right corner that they are logged in
         # there is now a 'log out' link / button instead of log in
-        logout = self.browser.find_element(By.LINK_TEXT, 'Logout')
+        print(self.browser.current_url)
+        logout = self.browser.find_element(By.LINK_TEXT, 'Log out')
         account_info = self.browser.find_element(By.NAME, 'account-info').text
-        assertEqual(account_info, "Logged in as")
+        self.assertEqual(account_info, "Logged in as user1234@example.org")
 
         # user clicks log out and is redirected to home page
         # where they see 'log in' link again
         logout.click()
-        self.assertEqual(self.current_url, reverse('home'))
+        self.assertEqual(self.browser.current_url, self.live_server_url + reverse('home'))
         self.browser.find_element(By.LINK_TEXT, 'Login')

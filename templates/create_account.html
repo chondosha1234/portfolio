@@ -5,7 +5,7 @@
     <form action="{% url 'create_account' %}" method="post">
       {% csrf_token %}
       <div class="form-outline mb4">
-        <input name="username" type="text" class="form-control" placeholder="Username"/>
+        <input name="email" type="text" class="form-control" placeholder="Email"/>
       </div>
 
       <div class="form-outline mb4">
@@ -16,7 +16,7 @@
         <input name="confirm_password" type="password" class="form-control" placeholder="Confirm Password"/>
       </div>
 
-      <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+      <button type="submit" class="btn btn-primary btn-block mb-4">Sign up</button>
 
       <div class="text-center">
         <a href="{% url 'login' %}">Login</a>
