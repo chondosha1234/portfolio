@@ -1,5 +1,4 @@
 from django.db import models
-from django.shortcuts import render
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,

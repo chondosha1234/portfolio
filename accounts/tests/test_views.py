@@ -54,6 +54,18 @@ class CreateAccountviewTest(TestCase):
         )
         self.assertRedirects(response, '/accounts/login')
 
+    @skip
+    def test_fails_if_no_password_given(self):
+        response = self.client.post(
+            '/accounts/create_account',
+            data={
+                'username': 'user1234',
+                'password': '',
+                'confirm_password': ''
+                }
+        )
+        self.assertRedirects(response, '/accounts/create_account')
+
     def test_failed_post_redirects_to_create_account(self):
         response = self.client.post(
             '/accounts/create_account',
