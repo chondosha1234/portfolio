@@ -6,6 +6,7 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import login as auth_login
 
 from django.views.generic import View
+from accounts.forms import LoginForm, CreateAccountForm
 
 User = get_user_model()
 
@@ -17,36 +18,41 @@ def logout(request):
 
 class LoginView(View):
     template_name = "login.html"
-    #form_class = LoginForm
+    form_class = LoginForm
 
     def get(self, request, *args, **kwargs):
-        #form = self.form_class()
-        #context = {
-        #    'form': form
-        #}
-        return render(request, self.template_name)
+        form = self.form_class()
+        context = {
+            'form': form
+        }
+        return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
-        if request.POST:
-            email = request.POST['email']
-            password = request.POST['password']
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
             user = authenticate(email=email, password=password)
             if user:
                 auth_login(request, user)
                 return redirect('home')
-        return render(request, self.template_name)
-
+        context = {
+            'form': form
+        }
+        return render(request, self.template_name, context)
 
 class CreateAccountView(View):
     template_name = "create_account.html"
-    #form_class = CreateAccountForm
+    form_class = CreateAccountForm
 
     def get(self, request, *args, **kwargs):
-        #form = self.form_class()
-        #context = {}
-        return render(request, self.template_name)
+        form = self.form_class()
+        context = {
+            'form': form
+        }
+        return render(request, self.template_name, context)
 
-    def post(self, request, *args, **kwargs):
+    def post2(self, request, *args, **kwargs):
         if request.POST:
             if not request.POST['password'] or not request.POST['confirm_password']:
                 return redirect('create_account')
@@ -54,3 +60,10 @@ class CreateAccountView(View):
                 new_user = User.objects.create(email=request.POST['email'], password=request.POST['password'])
                 return redirect('login')
         return render(request, 'create_account.html')
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            user = form.save()
+            return redirect('login')
+        return redirect('create_account')

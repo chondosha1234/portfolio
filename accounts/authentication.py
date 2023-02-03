@@ -6,7 +6,7 @@ class CustomAuthenticationBackend(object):
     def authenticate(self, request, email, password):
         try:
             user = User.objects.get(email=email)
-            if user.password == password:
+            if user.check_password(password):
                 return user
             else:
                 return None

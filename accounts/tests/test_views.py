@@ -24,6 +24,8 @@ class LoginViewTest(TestCase):
 
     def test_successful_login_authenticates_user(self):
         user = User.objects.create(email="user1234@example.org", password="chondosha5563")
+        user.set_password(user.password)
+        user.save()
         response = self.client.post(
             '/accounts/login',
             data={

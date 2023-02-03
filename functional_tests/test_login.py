@@ -23,7 +23,7 @@ class LoginTest(FunctionalTest):
         password = self.browser.find_element(By.NAME, 'password')
         self.assertEqual(
             email.get_attribute('placeholder'),
-            'Email'
+            'Email Address'
         )
 
         # under the fields there is a link to create new account
@@ -56,8 +56,8 @@ class LoginTest(FunctionalTest):
         submit = self.browser.find_element(By.CSS_SELECTOR, '.btn')
 
         email.send_keys("user1234@example.org")
-        password.send_keys("password1234")
-        confirm_pwd.send_keys("password1234")
+        password.send_keys("chondosha5563")
+        confirm_pwd.send_keys("chondosha5563")
         submit.click()
 
         # User presses submit button and is redirected to Login page
@@ -71,14 +71,13 @@ class LoginTest(FunctionalTest):
         submit = self.browser.find_element(By.CSS_SELECTOR, '.btn')
 
         email.send_keys("user1234@example.org")
-        password.send_keys("password1234")
+        password.send_keys("chondosha5563")
         submit.click()
 
         self.assertEqual(self.browser.current_url, self.live_server_url + reverse('home'))
 
         # user can now see in the top right corner that they are logged in
         # there is now a 'log out' link / button instead of log in
-        print(self.browser.current_url)
         logout = self.browser.find_element(By.LINK_TEXT, 'Log out')
         account_info = self.browser.find_element(By.NAME, 'account-info').text
         self.assertEqual(account_info, "Logged in as user1234@example.org")

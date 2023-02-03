@@ -5,7 +5,7 @@ from accounts.forms import LoginForm, CreateAccountForm
 
 User = get_user_model()
 
-class SignUpFormTest(TestCase):
+class CreateAccountFormTest(TestCase):
 
     def test_form_input_has_placeholder_and_css_class(self):
         form = CreateAccountForm()
@@ -51,11 +51,9 @@ class LoginFormTest(TestCase):
         self.assertIn('class="form-control"', form.as_p())
 
     def test_form_validation_for_blank_username(self):
-        form = LoginForm(data={'email': "", 'password': "password1234"})
+        form = LoginForm(data={'email': "", 'password': "chondosha5563"})
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors['email'], ["Must enter an email"])
 
     def test_form_validation_for_no_password(self):
         form = LoginForm(data={'email': "user1234@example.org", 'password': ""})
         self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors['password'], ["Must enter a password"])

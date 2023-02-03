@@ -17,10 +17,11 @@ class AuthenticateTest(TestCase):
         request = HttpRequest()
         email = "user1234@example.org"
         password = "chondosha5563"
-        User.objects.create(email=email, password=password)
+        expected_user = User.objects.create(email=email, password=password)
+        expected_user.set_password(expected_user.password)
+        expected_user.save()
         user = CustomAuthenticationBackend().authenticate(request, email, password)
-        existing_user = User.objects.get(email=email)
-        self.assertEqual(user, existing_user)
+        self.assertEqual(expected_user, user)
 
     def test_returns_None_for_existing_user_but_wrong_password(self):
         request = HttpRequest()

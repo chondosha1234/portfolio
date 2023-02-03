@@ -5,30 +5,23 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-class LoginForm(forms.ModelForm):
-
-    class Meta:
-        model = User
-        fields = ['email', 'password']
-        widgets = {
-            'email': forms.EmailInput(attrs={
+class LoginForm(forms.Form):
+    email = forms.EmailField(
+        label="",
+        widget=forms.EmailInput(
+            attrs={
                 "class": "form-control",
                 "placeholder": "Email Address"
-             }),
-            'password': forms.PasswordInput(attrs={
+            }))
+
+    password = forms.CharField(
+        label="",
+        widget=forms.PasswordInput(
+            attrs={
                 "class": "form-control",
                 "placeholder": "Password"
-             })
-        }
-        error_messages = {
-            'email': {'required': "Must enter an email"},
-            'password': {'required': "Must enter a password"}
-        }
+            }))
 
-    def __init__(self, *args, **kwargs):
-        super(LoginForm, self).__init__(*args, **kwargs)
-        self.fields["email"].label = ""
-        self.fields["password"].label = ""
 
 class CreateAccountForm(forms.ModelForm):
 
@@ -36,7 +29,8 @@ class CreateAccountForm(forms.ModelForm):
         label="",
         widget=forms.PasswordInput(attrs={
             "class": "form-control",
-            "placeholder": "Password"}),
+            "placeholder": "Password",
+            "name": "password"}),
         validators=[validate_password],
     )
 
@@ -44,7 +38,8 @@ class CreateAccountForm(forms.ModelForm):
         label="",
         widget=forms.PasswordInput(attrs={
             "class": "form-control",
-            "placeholder": "Confirm Password"}),
+            "placeholder": "Confirm Password",
+            "name": "Confirm Password"}),
         validators=[validate_password],
     )
 
@@ -53,7 +48,8 @@ class CreateAccountForm(forms.ModelForm):
         fields = ["email"]
         widgets = {"email": forms.EmailInput(attrs={
             "class": "form-control",
-            "placeholder": "Email Address"
+            "placeholder": "Email Address",
+            "name": "email"
         })}
         error_messages = {
             'email': {'required': "Must enter an email"}
