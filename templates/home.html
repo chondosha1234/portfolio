@@ -1,20 +1,29 @@
 {% extends 'base.html' %}
 
 {% block body_content %}
-  <body>
-    <h1>Jonathan Miller</h1>
+  <div class="row">
+    <div class="col-md-6 offset-md-3 jumbotron">
+      <div class="text-center">
+        <h1>Jonathan Miller</h1>
 
-    <p class="description">
-      This is my description paragraph.
-    </p>
+        <p name="description">
+          This is my description paragraph.
+        </p>
 
-    <a class="github-link" href="#">github</a>
-
-    <div class="miniprojects">
-      <ul class="project-list">
-        <li>
-          <a class="project-link" href="{% url 'todo_home' %}">ToDo List</a>
-        </li>
-      </ul>
+        <a name="github-link" href="#">github</a>
+      </div>
     </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="text-center">
+        <ul class="project-list">
+          <li>
+            <a class="project-link" href="{% url 'todo_home' %}">ToDo List</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 {% endblock %}

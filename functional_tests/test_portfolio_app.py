@@ -15,16 +15,16 @@ class VisitorTest(FunctionalTest):
         self.assertIn('Jonathan Miller', header_text)
 
         # There is a descriptive paragraph with links to github and my resume
-        description = self.browser.find_element(By.CSS_SELECTOR, '.description').text
+        description = self.browser.find_element(By.NAME, 'description').text
         self.assertIn("This is my description paragraph.", description)
 
-        github_link = self.browser.find_element(By.CSS_SELECTOR, '.github-link').text
+        github_link = self.browser.find_element(By.NAME, 'github-link').text
         self.assertIn("github", github_link)
         #and resume
 
         # under my information there are several links to apps and websites
         # I have created
-        mini_projects = self.browser.find_element(By.CSS_SELECTOR, '.miniprojects').text
+        mini_projects = self.browser.find_element(By.CLASS_NAME, 'project-link').text
         self.assertIn("ToDo List", mini_projects)
 
         # at the top of the page is a navigation bar with options
