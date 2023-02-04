@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'portfolio_app',
     'todo',
     'accounts',
+    'calendar_app',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
