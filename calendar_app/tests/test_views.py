@@ -15,14 +15,12 @@ class CalendarViewTest(TestCase):
 class CreateEventTest(TestCase):
     pass
 
-
 class EventDetailsTest(TestCase):
     pass
 
 
 class DeleteEventTest(TestCase):
     pass
-
 
 
 class DateFunctionTest(TestCase):

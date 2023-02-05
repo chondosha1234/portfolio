@@ -36,3 +36,6 @@ class CalendarView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+def event_details(request):
+    return render(request, 'event_details.html')
