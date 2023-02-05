@@ -15,6 +15,7 @@ class CalendarViewTest(TestCase):
 class CreateEventTest(TestCase):
     pass
 
+
 class EventDetailsTest(TestCase):
     pass
 

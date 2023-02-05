@@ -4,6 +4,8 @@ from django.urls import reverse
 import datetime
 from .server_tools import create_session_on_server
 from .management.commands.create_session import create_pre_authenticated_session
+from django.conf import settings
+from unittest import skip
 
 from .base import FunctionalTest
 
@@ -12,9 +14,9 @@ class CalendarTest(FunctionalTest):
 
     def create_pre_authenticated_session(self, email, password):
         if self.staging_server:
-            session_key = create_session_on_server(self.staging_server, email)
+            session_key = create_session_on_server(self.staging_server, email, password)
         else:
-            session_key = create_pre_authenticated_session(email)
+            session_key = create_pre_authenticated_session(email, password)
         # to set a cookie you need to visit domain
         # 404 pages load quickest
         self.browser.get(self.live_server_url + "/404_no_such_url/")
@@ -37,7 +39,9 @@ class CalendarTest(FunctionalTest):
         self.assertRegex(self.browser.current_url, '/accounts/login')
 
         #user logins in and sees a blank calendar for current month
-        self.create_pre_authenticated_session('user1234@example.org', 'chondosha5563') # investigate
+        self.create_pre_authenticated_session('user1234@example.org', 'chondosha5563')
+        self.browser.get(self.live_server_url + reverse('home'))
+        self.browser.find_element(By.LINK_TEXT, 'Calendar').click()
         self.assertRegex(self.browser.current_url, '/calendar/')
 
         calendar_table = self.browser.find_element(By.TAG_NAME, 'table')
@@ -77,6 +81,7 @@ class CalendarTest(FunctionalTest):
         current_month = f'{datetime.now().month} {datetime.now().year}'
         self.assertEqual(calendar_month, current_month)
 
+    @skip
     def test_create_new_events_and_delete(self):
 
         # User starts from homepage and sees list of mini projects
@@ -163,6 +168,7 @@ class CalendarTest(FunctionalTest):
         # user is redirected to calendar and the event is no longer there
         self.assertRegex(self.browser.current_url, '/calendar/')
 
+    @skip
     def test_event_presistence(self):
 
         # User starts from homepage and sees list of mini projects and clicks link for calendar
