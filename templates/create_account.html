@@ -2,14 +2,14 @@
 
 {% block body_content %}
   <div class="row">
-    <form action="{% url 'create_account' %}" method="post">
+    <form action="{% url 'accounts:create_account' %}" method="post">
       {% csrf_token %}
       {{ form }}
       <button type="submit" class="btn btn-primary btn-block mb-4">Sign up</button>
     </form>
 
     <div class="text-center">
-      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'accounts:login' %}">Login</a>
     </div>
   </div>
 {% endblock %}

@@ -1,15 +1,35 @@
 from django.test import TestCase
+from django.contrib.auth import get_user_model
 from datetime import datetime, date, timedelta
 from unittest import skip
 
 from calendar_app.views import get_date, prev_month, next_month
 
+User = get_user_model()
+
 class CalendarViewTest(TestCase):
 
-    def test_renders_calendar_page(self):
+    def test_renders_calendar_page_when_logged_in(self):
+        user = User.objects.create(email="user1234@example.org", password="chondosha5563")
+        user.set_password(user.password)
+        user.save()
+        response = self.client.post(
+            '/accounts/login',
+            data={
+                'email': "user1234@example.org",
+                'password': "chondosha5563"
+            }
+        )
         response = self.client.get('/calendar/')
         self.assertEquals(response.templates[0].name, 'calendar.html')
         self.assertTemplateUsed(response, 'calendar.html')
+
+    def test_renders_login_page_if_no_user_logged_in(self):
+        response = self.client.get('/calendar/')
+        self.assertRedirects(response, '/accounts/login?next=/calendar/')
+
+    def test_CalendarView_renders_current_month_on_initial_request(self):
+        pass
 
 
 class CreateEventTest(TestCase):

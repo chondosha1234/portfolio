@@ -29,7 +29,7 @@ def next_month(d):
 
 
 class CalendarView(LoginRequiredMixin, ListView):
-    login_url = "accounts:login"
+    login_url = 'accounts:login'
     model = Event
     template_name = 'calendar.html'
 
