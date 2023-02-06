@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.utils.safestring import mark_safe
 from datetime import timedelta, datetime, date
 import calendar
 
 from calendar_app.models import Event
+from calendar_app.utils import Calendar
+from calendar_app.forms import EventForm
 
-# Create your views here.
 
 def get_date(req_day):
     if req_day:
@@ -35,7 +38,48 @@ class CalendarView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        d = get_date(self.request.GET.get("month", None))
+        cal = Calendar(d.year, d.month)
+        html_cal = cal.formatmonth(self.request.user, withyear=True)
+
+        context['calendar'] = mark_safe(html_cal)
+        context['prev_month'] = prev_month(d)
+        context['next_month'] = next_month(d)
         return context
 
+
+@login_required
 def event_details(request):
     return render(request, 'event_details.html')
+
+
+@login_required
+def create_event(request):
+    if request.POST:
+        form = EventForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            description = form.cleaned_data["description"]
+            start_time = form.cleaned_data["start_time"]
+            end_time = form.cleaned_data["end_time"]
+            Event.objects.get_or_create(
+                user=request.user,
+                title=title,
+                description=description,
+                start_time=start_time,
+                end_time=end_time
+            )
+            return redirect('cal:calendar')
+
+    form = EventForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'create_event.html', context)
+
+
+@login_required
+def delete_event(request, event_id):
+    event = Event.objects.get(id=event_id)
+    event.delete()
+    return redirect('cal:calendar')
