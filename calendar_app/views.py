@@ -48,12 +48,17 @@ class CalendarView(LoginRequiredMixin, ListView):
         return context
 
 
-@login_required
-def event_details(request):
-    return render(request, 'event_details.html')
+@login_required(login_url='accounts:login')
+def event_details(request, event_id):
+    event = Event.objects.get(id=event_id)
+    context = {
+        "event": event,
+        "event_id": event_id,
+    }
+    return render(request, 'event_details.html', context)
 
 
-@login_required
+@login_required(login_url='accounts:login')
 def create_event(request):
     if request.POST:
         form = EventForm(request.POST)
@@ -78,7 +83,7 @@ def create_event(request):
     return render(request, 'create_event.html', context)
 
 
-@login_required
+@login_required(login_url='accounts:login')
 def delete_event(request, event_id):
     event = Event.objects.get(id=event_id)
     event.delete()

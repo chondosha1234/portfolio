@@ -1,13 +1,19 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from django.contrib.auth import get_user_model
 from django.urls import reverse
-import datetime
+from datetime import datetime
+import time
+import calendar
+
 from .server_tools import create_session_on_server
 from .management.commands.create_session import create_pre_authenticated_session
 from django.conf import settings
 from unittest import skip
 
 from .base import FunctionalTest
+
+User = get_user_model()
 
 
 class CalendarTest(FunctionalTest):
@@ -26,6 +32,19 @@ class CalendarTest(FunctionalTest):
             path='/',
         ))
 
+    def login_user_for_test(self):
+        self.browser.get(self.live_server_url + reverse('accounts:create_account'))
+        self.browser.find_element(By.NAME, 'email').send_keys("user1234@example.org")
+        self.browser.find_element(By.NAME, 'password').send_keys("chondosha5563")
+        self.browser.find_element(By.NAME, 'confirm_password').send_keys("chondosha5563")
+        self.browser.find_element(By.CSS_SELECTOR, '.btn').click()
+
+        self.browser.get(self.live_server_url + reverse('accounts:login'))
+        self.browser.find_element(By.NAME, 'email').send_keys("user1234@example.org")
+        self.browser.find_element(By.NAME, 'password').send_keys("chondosha5563")
+        self.browser.find_element(By.CSS_SELECTOR, '.btn').click()
+
+
     def test_calendar_app(self):
 
         # User starts from homepage and sees list of mini projects
@@ -39,14 +58,18 @@ class CalendarTest(FunctionalTest):
         self.assertRegex(self.browser.current_url, '/accounts/login')
 
         #user logins in and sees a blank calendar for current month
-        self.create_pre_authenticated_session('user1234@example.org', 'chondosha5563')
+        #self.create_pre_authenticated_session('user1234@example.org', 'chondosha5563')
+        #print(self.browser.get_cookies())
+        self.login_user_for_test()
+
         self.browser.get(self.live_server_url + reverse('home'))
         self.browser.find_element(By.LINK_TEXT, 'Calendar').click()
         self.assertRegex(self.browser.current_url, '/calendar/')
 
-        calendar_table = self.browser.find_element(By.TAG_NAME, 'table')
+        calendar_table = self.browser.find_element(By.CLASS_NAME, 'calendar')
         calendar_month = self.browser.find_element(By.CLASS_NAME, 'month').text
-        current_month = f'{datetime.now().month} {datetime.now().year}'
+        month = datetime.now().month
+        current_month = f'{calendar.month_name[month]} {datetime.now().year}'
         self.assertEqual(calendar_month, current_month)
 
         # user sees previous and next buttons
@@ -55,30 +78,34 @@ class CalendarTest(FunctionalTest):
 
         # user clicks next and sees the next month
         next.click()
-        self.assertRegex(self.browser.current_url, '/calendar/?month=$')
-
         calendar_month = self.browser.find_element(By.CLASS_NAME, 'month').text
-        next_month = f'{datetime.now().month + 1} {datetime.now().year}'
+        month = datetime.now().month + 1
+        if month > 12:
+            month = 1
+        next_month = f'{calendar.month_name[month]} {datetime.now().year}'
         self.assertEqual(calendar_month, next_month)
 
         # they click previous and see the current month
-        prev.click()
-        self.assertRegex(self.browser.current_url, '/calendar/?month=$')
-
+        self.browser.find_element(By.LINK_TEXT, 'Previous Month').click()
         calendar_month = self.browser.find_element(By.CLASS_NAME, 'month').text
-        current_month = f'{datetime.now().month} {datetime.now().year}'
+        month = datetime.now().month
+        current_month = f'{calendar.month_name[month]} {datetime.now().year}'
         self.assertEqual(calendar_month, current_month)
 
         # user clicks previous again and sees previous month
-        prev.click()
+        self.browser.find_element(By.LINK_TEXT, 'Previous Month').click()
         calendar_month = self.browser.find_element(By.CLASS_NAME, 'month').text
-        prev_month = f'{datetime.now().month - 1} {datetime.now().year}'
+        month = datetime.now().month - 1
+        if month < 1:
+            month = 12
+        prev_month = f'{calendar.month_name[month]} {datetime.now().year}'
         self.assertEqual(calendar_month, prev_month)
 
         # user clicks next and sees current month
-        next.click()
+        self.browser.find_element(By.LINK_TEXT, 'Next Month').click()
         calendar_month = self.browser.find_element(By.CLASS_NAME, 'month').text
-        current_month = f'{datetime.now().month} {datetime.now().year}'
+        month = datetime.now().month
+        current_month = f'{calendar.month_name[month]} {datetime.now().year}'
         self.assertEqual(calendar_month, current_month)
 
     @skip

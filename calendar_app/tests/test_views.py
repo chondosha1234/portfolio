@@ -46,6 +46,10 @@ class CreateEventTest(TestCase):
         self.assertEquals(response.templates[0].name, 'create_event.html')
         self.assertTemplateUsed(response, 'create_event.html')
 
+    def test_renders_login_page_if_no_user_logged_in(self):
+        response = self.client.get('/calendar/create_event/')
+        self.assertRedirects(response, '/accounts/login?next=/calendar/create_event/')
+
     def test_displays_create_event_form(self):
         self.client.force_login(
             User.objects.get_or_create(email="user1234@example.org", password="chondosha5563")[0]
@@ -81,7 +85,24 @@ class CreateEventTest(TestCase):
 
 
 class EventDetailsTest(TestCase):
-    pass
+
+    def test_renders_event_details_page(self):
+        user = User.objects.create(email="user1234@example.org", password="chondosha5563")
+        event = Event.objects.create(
+            user=user,
+            title='Test',
+            description='test',
+            start_time=timezone.now(),
+            end_time=timezone.now()
+        )
+        self.client.force_login(user)
+        response = self.client.get('/calendar/event_details/1/')
+        self.assertEquals(response.templates[0].name, 'event_details.html')
+        self.assertTemplateUsed(response, 'event_details.html')
+
+    def test_renders_login_page_if_no_user_logged_in(self):
+        response = self.client.get('/calendar/event_details/1/')
+        self.assertRedirects(response, '/accounts/login?next=/calendar/event_details/1/')
 
 
 class DeleteEventTest(TestCase):
