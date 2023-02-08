@@ -1,1 +1,24 @@
 {% extends 'base.html' %}
+
+{% block body_content %}
+
+<div class="container">
+  <div class="row"
+    <h3>Create a new event</h3>
+  </div>
+
+  <div class="row">
+    <form action="{% url 'cal:create_event' %}" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary btn-block mb-4" name="submit-btn">Submit</button>
+    </form>
+  </div>
+
+  <div class="row">
+    <button class="btn"><a href="{% url 'cal:calendar' %}">Return</a></button>
+  </div>
+</div>
+
+
+{% endblock %}

@@ -4,7 +4,7 @@ from django import forms
 
 
 class EventForm(ModelForm):
-    
+
     class Meta:
         model = Event
         fields = ["title", "start_time", "end_time", "description"]
@@ -21,7 +21,7 @@ class EventForm(ModelForm):
                     "type": "datetime-local",
                     "placeholder": "Start Time 'Y-m-d H:M:S'",
                 },
-                format="%Y-%m-%dT%H:%M"
+                format="%Y-%m-%dT%H:%M:%S"
             ),
             "end_time": DateInput(
                 attrs={
@@ -29,7 +29,7 @@ class EventForm(ModelForm):
                     "type": "datetime-local",
                     "placeholder": "End Time 'Y-m-d H:M:S'",
                 },
-                format="%Y-%m-%dT%H:%M"
+                format="%Y-%m-%dT%H:%M:%S"
             ),
             "description": forms.Textarea(
                 attrs={
@@ -46,5 +46,5 @@ class EventForm(ModelForm):
         self.fields["start_time"].label = ""
         self.fields["end_time"].label = ""
         self.fields["description"].label = ""
-        self.fields["start_time"].input_formats = ("%Y-%m-%dT%H:%M")
-        self.fields["end_time"].input_formats = ("%Y-%m-%dT%H:%M")
+        self.fields["start_time"].input_formats = ("%Y-%m-%dT%H:%M:%S")
+        self.fields["end_time"].input_formats = ("%Y-%m-%dT%H:%M:%S")
