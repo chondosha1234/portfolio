@@ -1,0 +1,19 @@
+body {
+  background-color: #343a40;
+  color: white;
+  text-shadow: 2px 2px black;
+}
+
+.card-body {
+  background-color: #343a40;
+}
+
+.card-container {
+  width: 100%;
+}
+
+.project-list {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+}

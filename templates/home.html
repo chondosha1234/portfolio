@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{% block extra_css %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'home_style.css' %}">
+{% endblock %}
 
 {% block body_content %}
   <div class="row">
@@ -16,20 +20,95 @@
   </div>
 
   <div class="row">
-    <div class="col-md-6">
-      <div class="text-center">
-        <ul class="project-list">
-          <li>
-            <a class="project-link" href="{% url 'todo_home' %}">ToDo List</a>
+    <div class="card-container">
+      <ul class="project-list">
+        <li>
+            <div class="card" style="width:18rem">
+              <img src="#" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">To Do List</h5>
+                <p class="card-text">
+                  My version of a simple To Do List. It has options to sign in
+                  and create your own personalized list.
+                </p>
+                <a class="btn btn-primary" href="{% url 'todo_home' %}">ToDo List</a>
+              </div>
+            </div>
+        </li>
+        <li>
+
+            <div class="card" style="width:18rem">
+              <img src="#" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">Calendar</h5>
+                <p class="card-text">
+                  A calendar app where you can sign in and create personalized
+                  events.
+                </p>
+                <a class="btn btn-primary" href="{% url 'todo_home' %}">Calendar</a>
+              </div>
+            </div>
           </li>
           <li>
-            <a class="project-link" href="{% url 'cal:calendar' %}">Calendar</a>
-          </li>
-          <li>
-            <a class="project-link" href="{% url 'ttt:start_page' %}">Tic Tac Toe</a>
-          </li>
-        </ul>
+
+            <div class="card" style="width:18rem">
+              <img src="#" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">Tic Tac Toe</h5>
+                <p class="card-text">
+                  The classic game tic tac toe. No sign is required. Just pick names
+                  for your players and start playing!
+                </p>
+                <a class="btn btn-primary" href="{% url 'ttt:start_page' %}">Tic Tac Toe</a>
+              </div>
+            </div>
+        </li>
+
+        <li>
+
+          <div class="card" style="width:18rem">
+            <img src="#" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">Tic Tac Toe</h5>
+              <p class="card-text">
+                The classic game tic tac toe. No sign is required. Just pick names
+                for your players and start playing!
+              </p>
+              <a class="btn btn-primary" href="{% url 'ttt:start_page' %}">Tic Tac Toe</a>
+            </div>
+          </div>
+      </li>
+
+      <li>
+
+        <div class="card" style="width:18rem">
+          <img src="#" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">Tic Tac Toe</h5>
+            <p class="card-text">
+              The classic game tic tac toe. No sign is required. Just pick names
+              for your players and start playing!
+            </p>
+            <a class="btn btn-primary" href="{% url 'ttt:start_page' %}">Tic Tac Toe</a>
+          </div>
+        </div>
+    </li>
+
+    <li>
+
+      <div class="card" style="width:18rem">
+        <img src="#" class="card-img-top">
+        <div class="card-body">
+          <h5 class="card-title">Tic Tac Toe</h5>
+          <p class="card-text">
+            The classic game tic tac toe. No sign is required. Just pick names
+            for your players and start playing!
+          </p>
+          <a class="btn btn-primary" href="{% url 'ttt:start_page' %}">Tic Tac Toe</a>
+        </div>
       </div>
+  </li>
+      </ul>
     </div>
   </div>
 {% endblock %}
