@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block extra_css %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ttt_style.css' %}">
+{% endblock %}
+
+{% block body_content %}
+<body>
+
+<section>
+
+<h2 class="game-title">Tic Tac Toe</h2>
+
+<br>
+
+<div class="form-container">
+ <form action="{% url 'ttt:main_page' %}" method="post">
+  {% csrf_token %}
+  <label for="textx" id="labelx">Name for player X: </label>
+  <input class="player" id="textx" name="textx" type="text" size="25" placeholder="Enter name...">
+  <br>
+  <label for="texto" id="labelo">Name for player O: </label>
+  <input class="player" id="texto" name="texto" type="text" size="25" placeholder="Enter name...">
+
+  <br>
+
+  <input class="newgame-btn" type="submit" value="Start Game">
+ </form>
+</div>
+
+</section>
+
+</body>
+{% endblock %}

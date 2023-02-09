@@ -1,0 +1,77 @@
+body {
+  background-color: #3CB371;
+}
+
+section {
+  text-align: center;
+  text-shadow: 3px 3px black;
+}
+
+label {
+  font-size: 25px;
+  color: #90EE90;
+}
+
+.player {
+  margin: 25px auto;
+  background-color: #2E8B57;
+  color: #98FB98;
+  box-shadow: 2px 2px 2px 2px black;
+  text-shadow: 2px 2px black;
+  font-size: 20px;
+}
+
+.cell {
+  width: 100px;
+  height: 100px;
+  border: 2px solid black;
+  box-shadow: 2px 2px 2px 2px black;
+  cursor: pointer;
+  line-height: 100px;
+  font-size: 60px;
+  color: #98FB98;
+  background-color: #2E8B57;
+}
+
+.game-title {
+  font-size: 35px;
+  color: #98FB98;
+  margin: 10px auto;
+}
+
+.game-container {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  width: 300px;
+  margin: 10px auto;
+}
+
+.game-status {
+  font-size: 25px;
+  color: #98FB98;
+  margin: 20px auto;
+}
+
+.newgame-btn {
+  margin: auto;
+  width: 200px;
+  height: 50px;
+  font-size: 16px;
+  box-shadow: 2px 2px 2px 2px black;
+  background-color: #2E8B57;
+  text-shadow: 1px 1px black;
+  color: #98FB98;
+  border: 2px solid black;
+}
+
+.restart-btn {
+  margin: auto;
+  width: 200px;
+  height: 50px;
+  font-size: 16px;
+  box-shadow: 2px 2px 2px 2px black;
+  background-color: #2E8B57;
+  text-shadow: 1px 1px black;
+  color: #98FB98;
+  border: 2px solid black;
+}

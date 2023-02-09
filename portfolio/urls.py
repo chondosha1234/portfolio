@@ -21,5 +21,6 @@ urlpatterns = [
     path('', include('portfolio_app.urls')),
     path('todo/', include('todo.urls')),
     path('accounts/', include('accounts.urls')),
-    path('calendar/', include('calendar_app.urls'))
+    path('calendar/', include('calendar_app.urls')),
+    path('tictactoe/', include('tictactoe.urls'))
 ]

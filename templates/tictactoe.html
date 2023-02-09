@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block extra_css %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'ttt_style.css' %}">
+{% endblock %}
+
+{% block body_content %}
+<body>
+<section>
+
+<h2 class="game-title">Tic Tac Toe</h2>
+
+<br>
+
+  <div class="game-container">
+    <div data-cell-index="0" class="cell"></div>
+    <div data-cell-index="1" class="cell"></div>
+    <div data-cell-index="2" class="cell"></div>
+    <div data-cell-index="3" class="cell"></div>
+    <div data-cell-index="4" class="cell"></div>
+    <div data-cell-index="5" class="cell"></div>
+    <div data-cell-index="6" class="cell"></div>
+    <div data-cell-index="7" class="cell"></div>
+    <div data-cell-index="8" class="cell"></div>
+  </div>
+
+<br>
+
+  <h2 class="game-status"></h2>
+  <button class="restart-btn">Restart Game</button>
+  <button class="newgame-btn" value="New Game" onclick="location.href='{% url 'ttt:start_page' %}'">New Game</button>
+
+<br>
+
+</section>
+
+<div class="player-names" data-playerx="{{playerx}}" data-playero="{{playero}}"></div>
+
+<script src="{% static 'tictactoe.js' %}"></script>
+</body>
+
+{% endblock %}
