@@ -1,0 +1,65 @@
+body {
+  background-color: #343a40;
+  color: white;
+  text-shadow: 2px 2px black;
+}
+
+h2 {
+  font-weight: bold;
+  text-shadow: 2px 2px black;
+  text-align: center;
+  margin-top: 16px;
+}
+
+label {
+  text-shadow: 2px 2px black;
+}
+
+.page-select {
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  text-align: center;
+}
+
+.page-btn {
+  background-color: #484848;
+  text-shadow: 2px 2px black;
+}
+
+.page-link {
+  color: white;
+  text-decoration: none;
+}
+
+.page-link:visited {
+  color: white;
+  text-decoration: none;
+}
+
+.list-body-container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+
+}
+
+.task-list {
+  margin-right: auto;
+  margin-left: auto;
+  width: 50%;
+}
+
+.submit-btn {
+  color: white;
+  background-color: #484848;
+  text-shadow: 2px 2px black;
+}
+
+.form-container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  text-align: left;
+  padding: 10px;
+}

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'todo_style.css' %}">
+{% endblock %}
+
+{% block body_content %}
+<body>
+
+<br>
+
+<div class="heading">
+  <h2> To Do List </h2>
+</div>
+
+<br>
+
+<div class="page-select">
+  <button class='page-btn'>
+    <a class="page-link" href="{% url 'todo:todo_list' %}"> Current Tasks </a>
+  </button>
+  <button class='page-btn'>
+    <a class="page-link" href="{% url 'todo:completed_tasks' %}"> Completed Tasks </a>
+  </button>
+</div>
+
+<br>
+
+<div class="list-body-container">
+  <ol>
+  {% for form in tasks_forms %}
+  <li>
+    <form action="#" method="post">
+      {% csrf_token %}
+      {{form}} &nbsp; {{form.text}} &nbsp; ({{form.id}})
+    </form>
+  </li>
+  {% endfor %}
+  </ol>
+</div>
+
+<br>
+
+<div class="functions-container">
+  <div class="form-container">
+    <form action="#" method="post">
+      {% csrf_token %}
+      <label for="add-description">Add Task: </label>
+      <input class="description-bar" id="add-description" type="text" size ="25" name="add-description" placeholder="Enter description...">
+      <input class="submit-btn" type="submit" value="Submit">
+    </form>
+  </div>
+
+  <div class="form-container">
+    <form action="{% url 'todo:edit_task' %}" method="post">
+      {% csrf_token %}
+      <label for="id-bar">Edit Task: </label>
+      <input class="id-bar" id="edit-id" type="text" size="10" name="edit-id" placeholder="Enter ID...">
+      <input class="description-bar" type="text" size="25" name="edit-description" placeholder="Enter description...">
+      <input class="submit-btn" type="submit" value="Submit">
+    </form>
+  </div>
+
+  <div class="form-container">
+    <form action="{% url 'todo:delete_task' %}" method="post">
+      {% csrf_token %}
+      <label for="id-bar">Delete Task: </label>
+      <input class="id-bar" id="delete-id" type="text" size="10" name="delete-id" placeholder="Enter ID...">
+      <input class="submit-btn" type="submit" value="Submit">
+    </form>
+  </div>
+
+</div>
+
+</body>
+{% endblock %}
