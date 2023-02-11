@@ -1,8 +1,11 @@
 from django.test import TestCase
 from django.urls import resolve
+from django.utils.html import escape
 from unittest import skip
 
 from todo.models import List, Task
+from todo.forms import TaskForm, ExistingListTaskForm, DUPLICATE_TASK_ERROR
+
 
 class ToDoHomeTest(TestCase):
 
@@ -62,4 +65,58 @@ class ListViewTest(TestCase):
 
     def test_invalid_input_nothing_saved_to_db(self):
         self.post_invalid_input()
+        self.assertEqual(Task.objects.count(), 0)
+
+    def test_invalid_input_renders_list_template(self):
+        response = self.post_invalid_input()
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'todo_list.html')
+
+    def test_invalid_input_passes_form_to_template(self):
+        response = self.post_invalid_input()
+        self.assertIsInstance(response.context['add_form'], ExistingListTaskForm)
+
+    def test_duplicate_validation_error_ends_on_list_page(self):
+        list1 = List.objects.create()
+        item1 = Task.objects.create(list=list1, text='textey')
+        response = self.client.post(f'/todo/{list1.id}', data={'text': 'textey'})
+
+        expected_error = escape(DUPLICATE_TASK_ERROR)
+        self.assertContains(response, expected_error)
+        self.assertTemplateUsed(response, 'todo_list.html')
+        self.assertEqual(Task.objects.all().count(), 1)
+
+
+class NewListIntegratedTest(TestCase):
+
+    def test_save_post_request(self):
+        self.client.post('/todo/new', data={'text': 'A new list item'})
+
+        self.assertEqual(Task.objects.count(), 1)
+        new_item = Task.objects.first()
+        self.assertEqual(new_item.text, 'A new list item')
+
+    def test_redirect_after_post(self):
+        response = self.client.post('/todo/new', data={'text': 'A new list item'})
+
+        self.assertEqual(response.status_code, 302)
+        new_list = Task.objects.first()
+        self.assertEqual(response['location'], f'/todo/{new_list.id}')
+        self.assertRedirects(response, f'/todo/{new_list.id}')
+
+    def test_invalid_input_renders_home(self):
+        response = self.client.post('/todo/new', data={'text': ''})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'todo_list.html')
+
+    def test_invalid_input_passes_form_to_template(self):
+        response = self.client.post('/todo/new', data={'text': ''})
+
+        self.assertIsInstance(response.context['add_form'], TaskForm)
+
+    def test_invalid_list_item_arent_saved(self):
+        self.client.post('/todo/new', data={'text': ''})
+
+        self.assertEqual(List.objects.count(), 0)
         self.assertEqual(Task.objects.count(), 0)

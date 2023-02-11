@@ -10,5 +10,7 @@ urlpatterns = [
     path('user/<email>', views.todo_list, name='user_list'),
     path('delete_task', views.delete_task, name='delete_task'),
     path('edit_task', views.edit_task, name='edit_task'),
+    path('complete/<id>', views.complete, name='complete'),
     path('completed_tasks', views.completed_tasks, name='completed_tasks'),
+    path('completed_tasks/<list_id>', views.completed_tasks, name='completed_tasks'),
 ]

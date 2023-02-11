@@ -1,8 +1,29 @@
 from django.db import models
+from django.urls import reverse
+from django.conf import settings
 
 # Create your models here.
 class List(models.Model):
-    pass
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete = models.CASCADE,
+        blank=True,
+        null=True
+    )
+
+    @property
+    def name(self):
+        return self.item_set.first().text
+
+    def get_absolute_url(self):
+        return reverse('todo:view_list', args=[self.id])
+
+    @staticmethod
+    def create_new(first_item_text, owner=None):
+        list_ = List.objects.create(owner=owner)
+        Task.objects.create(text=first_item_text, list=list_)
+        return list_
+
 
 class Task(models.Model):
     text = models.CharField(max_length=64)
@@ -19,3 +40,4 @@ class Task(models.Model):
 class Completed(models.Model):
     description = models.CharField(max_length=64)
     task_id = models.IntegerField()
+    list = models.ForeignKey(List, on_delete=models.CASCADE, default=None)

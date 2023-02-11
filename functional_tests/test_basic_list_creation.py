@@ -1,6 +1,9 @@
 from .base import FunctionalTest
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from django.urls import reverse
+import time
 
 class ToDoListTest(FunctionalTest):
 
@@ -23,41 +26,36 @@ class ToDoListTest(FunctionalTest):
         self.browser.find_element(By.LINK_TEXT, 'Completed Tasks')
 
         # there is an input that says add task
-        inputbox = self.browser.find_element(By.ID, "add-item")
+        inputbox = self.browser.find_element(By.ID, 'add-item')
 
         # user enters an item into the add task box  'Buy milk'
         inputbox.send_keys('Buy milk')
         # user presses enter and item appears on list as 1. Buy Milk with a checkbox
         inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_table("Buy milk") ####
 
+        self.wait_for_row_in_table('Buy milk')
         # page creates a new url for this list
         user_list_url = self.browser.current_url
         self.assertRegex(user_list_url, '/todo/.+')
 
         # user enters second item 'buy bread'
-        inputbox = self.browser.find_element(By.ID, "add-item")
-        inputbox.send_keys('Buy bread')
-        inputbox.send_keys(Keys.ENTER)
-
+        self.add_list_item('Buy bread')
         # page now has 2 entries
-        self.wait_for_row_in_table("Buy milk")
-        self.wait_for_row_in_table("Buy bread")
+        self.wait_for_row_in_table('Buy milk')
+        self.wait_for_row_in_table('Buy bread')
 
         # first user leaves page
         self.browser.quit()
 
         # user2 visits home page and goes to to-do list and there is no list there
-        self.setUp()
+        self.browser = webdriver.Firefox()
+        self.browser.get(self.live_server_url + reverse('todo:todo_list'))
         page_text = self.browser.find_element(By.TAG_NAME, 'body').text
         self.assertNotIn('Buy bread', page_text)
         self.assertNotIn('Buy milk', page_text)
 
         # user2 enters an item 'buy chocolate'
-        inputbox = self.browser.find_element(By.ID, "add-item")
-        inputbox.send_keys('Buy chocolate')
-        inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_table("Buy chocolate")
+        self.add_list_item('Buy chocolate')
 
         # page creates new url for the list
         # it is different from user 1
@@ -67,4 +65,4 @@ class ToDoListTest(FunctionalTest):
 
         page_text = self.browser.find_element(By.TAG_NAME, 'body').text
         self.assertNotIn('Buy bread', page_text)
-        self.assertIn('Buy milk', page_text)
+        self.assertIn('Buy chocolate', page_text)

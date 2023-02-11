@@ -1,7 +1,8 @@
 from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 from django import forms
-from todo.models import Task
+
+from todo.models import Task, List
 
 DUPLICATE_TASK_ERROR = "You've already got this in your list"
 
@@ -13,9 +14,14 @@ class TaskForm(forms.models.ModelForm):
         widgets = {
             'text': forms.fields.TextInput(attrs={
                 'placeholder': 'Enter a to-do item',
-                'class': 'form-control input-lg'
+                'class': 'form-control input-lg',
+                'id': 'add-item'
             }),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(TaskForm, self).__init__(*args, **kwargs)
+        self.fields['text'].label = 'Add Task'
 
 
 class NewListForm(TaskForm):
@@ -39,6 +45,43 @@ class ExistingListTaskForm(TaskForm):
         except ValidationError as e:
             e.error_dict = {'text': [DUPLICATE_TASK_ERROR]}
             self._update_errors(e)
+
+
+class DeleteForm(forms.Form):
+
+    task_id = forms.IntegerField(
+        label="Delete Task",
+        widget=forms.NumberInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter ID to delete...',
+                'id': 'delete-item'
+            }
+        )
+    )
+
+
+class EditForm(forms.Form):
+
+    task_id = forms.IntegerField(
+        label="Edit Task",
+        widget=forms.NumberInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter ID to edit...'
+            }
+        )
+    )
+
+    text = forms.CharField(
+        label="",
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter new text...'
+            }
+        )
+    )
 
 
 class CheckBoxForm(forms.ModelForm):
