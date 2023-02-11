@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.http import HttpResponseRedirect
-#from django.contrib.auth import get_user_model
+from django.urls import reverse
+from django.contrib.auth import get_user_model
 
 from todo.models import Task, List, Completed
 from todo.forms import (
@@ -9,9 +10,9 @@ from todo.forms import (
     ExistingListTaskForm, DeleteForm, EditForm
     )
 
-#User = get_user_model()
+User = get_user_model()
 
-# Create your views here.
+
 def todo_list(request):
     add_form = TaskForm()
     context = {
@@ -58,24 +59,32 @@ def new_list(request):
     return render(request, 'todo_list.html', context)
 
 
-def delete_task(request):
+def user_list(request, email):
+    owner = User.objects.get(email=email)
+    context = {
+        'owner': owner
+    }
+    return render(request, 'user_lists.html', context)
+
+
+def delete_task(request, list_id):
     delete_form = DeleteForm(data=request.POST)
     if delete_form.is_valid():
         task = Task.objects.get(id=request.POST['task_id'])
         if task:
             task.delete()
-    return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
+    return reverse('todo:view_list', args=[list_id])
 
 
-def edit_task(request):
+def edit_task(request, list_id):
     edit_form = EditForm(data=request.POST)
     if edit_form.is_valid():
         task = Task.objects.get(id=request.POST['task_id'])
         if task:
             task.text = request.POST['text']
             task.save()
-    return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
-    
+    return reverse('todo:view_list', args=[list_id])
+
 
 def completed_tasks(request, list_id=None):
     tasks = Completed.objects.filter(list=list_id)

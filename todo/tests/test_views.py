@@ -1,10 +1,13 @@
 from django.test import TestCase
 from django.urls import resolve
 from django.utils.html import escape
+from django.contrib.auth import get_user_model
 from unittest import skip
 
 from todo.models import List, Task
 from todo.forms import TaskForm, ExistingListTaskForm, DUPLICATE_TASK_ERROR
+
+User = get_user_model()
 
 
 class ToDoHomeTest(TestCase):
@@ -120,3 +123,27 @@ class NewListIntegratedTest(TestCase):
 
         self.assertEqual(List.objects.count(), 0)
         self.assertEqual(Task.objects.count(), 0)
+
+
+class UserListTest(TestCase):
+
+    def test_my_lists_url_renders_my_lists_template(self):
+        User.objects.create(email='a@b.com', password="chondosha5563")
+        response = self.client.get('/todo/user/a@b.com')
+        self.assertTemplateUsed(response, 'user_lists.html')
+
+    def test_passes_correct_owner_to_template(self):
+        User.objects.create(email='wrong@owner.com', password="wrongpassword")
+        correct_user = User.objects.create(email='a@b.com', password="chondosha5563")
+        response = self.client.get('/todo/user/a@b.com')
+        self.assertEqual(response.context['owner'], correct_user)
+
+
+class DeleteTaskTest(TestCase):
+
+    def test_delete_removes_task_from_db(self):
+        pass
+
+
+class EditTaskTest(TestCase):
+    pass

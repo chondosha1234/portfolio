@@ -5,7 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from django.urls import reverse
 import time
 
-class ToDoListTest(FunctionalTest):
+class SimnpleListCreationTest(FunctionalTest):
 
     def test_start_simple_list(self):
         # user goes to home page

@@ -13,12 +13,12 @@ class TaskForm(forms.models.ModelForm):
         fields = ('text',)
         widgets = {
             'text': forms.fields.TextInput(attrs={
-                'placeholder': 'Enter a to-do item',
+                'placeholder': 'Enter a To Do Task',
                 'class': 'form-control input-lg',
                 'id': 'add-item'
             }),
         }
-
+    
     def __init__(self, *args, **kwargs):
         super(TaskForm, self).__init__(*args, **kwargs)
         self.fields['text'].label = 'Add Task'

@@ -23,6 +23,11 @@
   <button class='page-btn'>
     <a class="page-link" href="{% if list %}{% url 'todo:completed_tasks' list.id %}{% else %}{% url 'todo:completed_tasks' %}{% endif %}"> Completed Tasks </a>
   </button>
+  {% if user.email %}
+  <button class='page-btn'>
+    <a class="page-link" href="{% url 'todo:user_list' user.email %}"> Your Lists </a>
+  </button>
+  {% endif %}
 </div>
 
 <br>
@@ -50,20 +55,22 @@
     </form>
   </div>
 
+  {% if list %}
   <div class="form-container">
-    <form action="{% url 'todo:edit_task' %}" method="post">
+    <form action="{% url 'todo:edit_task' list.id %}" method="post">
       {% csrf_token %}
       {{ edit_form }}
     </form>
   </div>
 
   <div class="form-container">
-    <form action="{% url 'todo:delete_task' %}" method="post">
+    <form action="{% url 'todo:delete_task' list.id %}" method="post">
       {% csrf_token %}
       {{ delete_form }}
     </form>
   </div>
-
+  {% endif %}
+  
 </div>
 
 </body>
