@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import WebDriverException
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.urls import reverse
 import os
 import time
 
@@ -19,6 +20,18 @@ class FunctionalTest(StaticLiveServerTestCase):
     def tearDown(self):
         self.browser.quit()
 
+    def login_user_for_test(self):
+        self.browser.get(self.live_server_url + reverse('accounts:create_account'))
+        self.browser.find_element(By.NAME, 'email').send_keys("user1234@example.org")
+        self.browser.find_element(By.NAME, 'password').send_keys("chondosha5563")
+        self.browser.find_element(By.NAME, 'confirm_password').send_keys("chondosha5563")
+        self.browser.find_element(By.CSS_SELECTOR, '.btn').click()
+
+        self.browser.get(self.live_server_url + reverse('accounts:login'))
+        self.browser.find_element(By.NAME, 'email').send_keys("user1234@example.org")
+        self.browser.find_element(By.NAME, 'password').send_keys("chondosha5563")
+        self.browser.find_element(By.CSS_SELECTOR, '.btn').click()
+
     def wait(fn):
         def modified_fn(*args, **kwargs):
             start_time = time.time()
@@ -30,6 +43,14 @@ class FunctionalTest(StaticLiveServerTestCase):
                         raise e
                     time.sleep(0.5)
         return modified_fn
+
+    @wait
+    def wait_for_element_name(self, name):
+        return self.browser.find_element(By.NAME, name)
+
+    @wait
+    def wait_for_element_link(self, link):
+        return self.browser.find_element(By.LINK_TEXT, link)
 
     @wait
     def wait_for_row_in_table(self, row_text):

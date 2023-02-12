@@ -25,7 +25,7 @@
   </button>
   {% if user.email %}
   <button class='page-btn'>
-    <a class="page-link" href="{% url 'todo:user_list' user.email %}"> Your Lists </a>
+    <a class="page-link" href="{% url 'todo:user_list' user.email %}"> My Lists </a>
   </button>
   {% endif %}
 </div>
@@ -70,7 +70,7 @@
     </form>
   </div>
   {% endif %}
-  
+
 </div>
 
 </body>

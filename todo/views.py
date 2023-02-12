@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 
@@ -68,22 +68,26 @@ def user_list(request, email):
 
 
 def delete_task(request, list_id):
+    list_ = List.objects.get(id=list_id)
     delete_form = DeleteForm(data=request.POST)
     if delete_form.is_valid():
         task = Task.objects.get(id=request.POST['task_id'])
-        if task:
+        if task and task.list == list_:
             task.delete()
-    return reverse('todo:view_list', args=[list_id])
+
+    return HttpResponse(reverse('todo:view_list', args=[list_id]))
 
 
 def edit_task(request, list_id):
+    list_ = List.objects.get(id=list_id)
     edit_form = EditForm(data=request.POST)
     if edit_form.is_valid():
         task = Task.objects.get(id=request.POST['task_id'])
-        if task:
+        if task and task.list == list_:
             task.text = request.POST['text']
             task.save()
-    return reverse('todo:view_list', args=[list_id])
+            
+    return HttpResponse(reverse('todo:view_list', args=[list_id]))
 
 
 def completed_tasks(request, list_id=None):

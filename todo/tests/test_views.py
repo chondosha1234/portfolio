@@ -129,21 +129,46 @@ class UserListTest(TestCase):
 
     def test_my_lists_url_renders_my_lists_template(self):
         User.objects.create(email='a@b.com', password="chondosha5563")
-        response = self.client.get('/todo/user/a@b.com')
+        response = self.client.get('/todo/user/a@b.com/')
         self.assertTemplateUsed(response, 'user_lists.html')
 
     def test_passes_correct_owner_to_template(self):
         User.objects.create(email='wrong@owner.com', password="wrongpassword")
         correct_user = User.objects.create(email='a@b.com', password="chondosha5563")
-        response = self.client.get('/todo/user/a@b.com')
+        response = self.client.get('/todo/user/a@b.com/')
         self.assertEqual(response.context['owner'], correct_user)
 
 
 class DeleteTaskTest(TestCase):
 
     def test_delete_removes_task_from_db(self):
+        list_ = List.objects.create()
+        task = Task.objects.create(list=list_, text='test task')
+        self.assertEqual(Task.objects.count(), 1)
+
+        self.client.post(f'/todo/delete_task/{list_.id}', data={'task_id': 1})
+        self.assertEqual(Task.objects.count(), 0)
+
+    def test_cannot_delete_item_from_other_list(self):
+        list1 = List.objects.create()
+        list2 = List.objects.create()
+        task = Task.objects.create(list=list2, text='test task')
+        self.assertEqual(Task.objects.count(), 1)
+
+        self.client.post(f'/todo/delete_task/{list1.id}', data={'task_id': 1})
+        self.assertEqual(Task.objects.count(), 1)
+
+    def test_invalid_input_returns_error_message(self):
         pass
 
 
 class EditTaskTest(TestCase):
-    pass
+
+    def test_edit_changes_existing_task_text(self):
+        pass
+
+    def test_cannot_edit_task_from_other_list(self):
+        pass
+
+    def test_invalid_id_returns_error_message(self):
+        pass

@@ -6,9 +6,6 @@ from datetime import datetime, date
 import time
 import calendar
 
-from .server_tools import create_session_on_server
-from .management.commands.create_session import create_pre_authenticated_session
-from django.conf import settings
 from unittest import skip
 from calendar_app.models import Event
 
@@ -18,32 +15,6 @@ User = get_user_model()
 
 
 class CalendarTest(FunctionalTest):
-
-    def create_pre_authenticated_session(self, email, password):
-        if self.staging_server:
-            session_key = create_session_on_server(self.staging_server, email, password)
-        else:
-            session_key = create_pre_authenticated_session(email, password)
-        # to set a cookie you need to visit domain
-        # 404 pages load quickest
-        self.browser.get(self.live_server_url + "/404_no_such_url/")
-        self.browser.add_cookie(dict(
-            name=settings.SESSION_COOKIE_NAME,
-            value=session_key,
-            path='/',
-        ))
-
-    def login_user_for_test(self):
-        self.browser.get(self.live_server_url + reverse('accounts:create_account'))
-        self.browser.find_element(By.NAME, 'email').send_keys("user1234@example.org")
-        self.browser.find_element(By.NAME, 'password').send_keys("chondosha5563")
-        self.browser.find_element(By.NAME, 'confirm_password').send_keys("chondosha5563")
-        self.browser.find_element(By.CSS_SELECTOR, '.btn').click()
-
-        self.browser.get(self.live_server_url + reverse('accounts:login'))
-        self.browser.find_element(By.NAME, 'email').send_keys("user1234@example.org")
-        self.browser.find_element(By.NAME, 'password').send_keys("chondosha5563")
-        self.browser.find_element(By.CSS_SELECTOR, '.btn').click()
 
 
     def test_calendar_app(self):
@@ -59,8 +30,6 @@ class CalendarTest(FunctionalTest):
         self.assertRegex(self.browser.current_url, '/accounts/login')
 
         #user logins in and sees a blank calendar for current month
-        #self.create_pre_authenticated_session('user1234@example.org', 'chondosha5563')
-        #print(self.browser.get_cookies())
         self.login_user_for_test()
 
         self.browser.get(self.live_server_url + reverse('home'))
@@ -124,12 +93,12 @@ class CalendarTest(FunctionalTest):
 
         #self.create_pre_authenticated_session('user1234@example.org', 'chondosha5563')
 
-        # user sees button to add event
-        add_event = self.browser.find_element(By.LINK_TEXT, 'Add Event')
-        # user clicks button
-        add_event.click()
+        # user sees button to add event and clicks button
+        add_btn = self.wait_for_element_link('Add Event')
+        add_btn.send_keys(Keys.ENTER)
 
         # user sees create new event page
+        time.sleep(1)
         self.assertRegex(self.browser.current_url, '/calendar/create_event/')
 
         # at the bottom there is a return button
@@ -139,14 +108,15 @@ class CalendarTest(FunctionalTest):
         self.assertRegex(self.browser.current_url, '/calendar/')
 
         # user goes to create event page
-        self.browser.find_element(By.LINK_TEXT, 'Add Event').click()
+        add_btn = self.wait_for_element_link('Add Event')
+        add_btn.send_keys(Keys.ENTER)
 
         # there are 4 fields, add event title, start time, end time, and description
         # user enters info and creates event
-        title = self.browser.find_element(By.NAME, 'title')
-        start_time = self.browser.find_element(By.NAME, 'start_time')
-        end_time = self.browser.find_element(By.NAME, 'end_time')
-        description = self.browser.find_element(By.NAME, 'description')
+        title = self.wait_for_element_name('title')
+        start_time = self.wait_for_element_name('start_time')
+        end_time = self.wait_for_element_name('end_time')
+        description = self.wait_for_element_name('description')
         self.assertEqual(
             title.get_attribute('placeholder'),
             'Enter event title'
@@ -208,17 +178,15 @@ class CalendarTest(FunctionalTest):
         self.login_user_for_test()
         self.browser.find_element(By.LINK_TEXT, 'Calendar').click()
 
-        #user logins in and sees a blank calendar for current month
-        #self.create_pre_authenticated_session('user1234@example.org', 'chondosha5563')
-
         # user sees button to add event and clicks it
-        self.browser.find_element(By.LINK_TEXT, 'Add Event').click()
+        add_btn = self.wait_for_element_link('Add Event')
+        add_btn.send_keys(Keys.ENTER)
 
         # user creates event
-        title = self.browser.find_element(By.NAME, 'title')
-        start_time = self.browser.find_element(By.NAME, 'start_time')
-        end_time = self.browser.find_element(By.NAME, 'end_time')
-        description = self.browser.find_element(By.NAME, 'description')
+        title = self.wait_for_element_name('title')
+        start_time = self.wait_for_element_name('start_time')
+        end_time = self.wait_for_element_name('end_time')
+        description = self.wait_for_element_name('description')
 
         d = datetime.now().strftime("%Y-%-m-%-d %H:%M:%S")
         title.send_keys('Test event')

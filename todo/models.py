@@ -13,7 +13,7 @@ class List(models.Model):
 
     @property
     def name(self):
-        return self.item_set.first().text
+        return self.task_set.first().text
 
     def get_absolute_url(self):
         return reverse('todo:view_list', args=[self.id])
