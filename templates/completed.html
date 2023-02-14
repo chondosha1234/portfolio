@@ -1,1 +1,38 @@
 {% extends 'base.html' %}
+{% block extra_css %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'todo_style.css' %}">
+{% endblock %}
+
+{% block body_content %}
+<body>
+
+<br>
+
+<div class="heading">
+  <h2> Completed Tasks </h2>
+</div>
+
+<br>
+
+<div class="page-select">
+  <button class='page-btn'>
+    <a class="page-link" href="{% url 'todo:view_list' list.id %}"> Current Tasks </a>
+  </button>
+  <button class='page-btn'>
+    <a class="page-link" href="{% url 'todo:completed_tasks' list.id %}"> Completed Tasks </a>
+  </button>
+</div>
+
+<br>
+
+<div class="task-list">
+  <ul>
+    {% for task in tasks %}
+      <li>{{task.text}}</li>
+    {% endfor %}
+  </ul>
+</div>
+
+</body>
+{% endblock %}

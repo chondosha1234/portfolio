@@ -23,7 +23,7 @@ class SimnpleListCreationTest(FunctionalTest):
 
         # there are 2 buttons that say current tasks and completed tasks
         self.browser.find_element(By.LINK_TEXT, 'Current Tasks')
-        self.browser.find_element(By.LINK_TEXT, 'Completed Tasks')
+        #self.browser.find_element(By.LINK_TEXT, 'Completed Tasks')
 
         # there is an input that says add task
         inputbox = self.browser.find_element(By.ID, 'add-item')

@@ -18,11 +18,13 @@
 
 <div class="page-select">
   <button class='page-btn'>
-    <a class="page-link" href="{% url 'todo:todo_list' %}"> Current Tasks </a>
+    <a class="page-link" href="{% if list %}{% url 'todo:view_list' list.id %}{% else %}{% url 'todo:todo_list' %}{% endif %}"> Current Tasks </a>
   </button>
+  {% if list %}
   <button class='page-btn'>
-    <a class="page-link" href="{% if list %}{% url 'todo:completed_tasks' list.id %}{% else %}{% url 'todo:completed_tasks' %}{% endif %}"> Completed Tasks </a>
+    <a class="page-link" href="{% url 'todo:completed_tasks' list.id %}"> Completed Tasks </a>
   </button>
+  {% endif %}
   {% if user.email %}
   <button class='page-btn'>
     <a class="page-link" href="{% url 'todo:user_list' user.email %}"> My Lists </a>

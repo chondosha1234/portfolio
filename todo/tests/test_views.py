@@ -4,7 +4,7 @@ from django.utils.html import escape
 from django.contrib.auth import get_user_model
 from unittest import skip
 
-from todo.models import List, Task
+from todo.models import List, Task, Completed
 from todo.forms import TaskForm, ExistingListTaskForm, DUPLICATE_TASK_ERROR
 
 User = get_user_model()
@@ -165,10 +165,91 @@ class DeleteTaskTest(TestCase):
 class EditTaskTest(TestCase):
 
     def test_edit_changes_existing_task_text(self):
-        pass
+        list_ = List.objects.create()
+        Task.objects.create(list=list_, text='test task')
+        task = Task.objects.get(id=1)
+        self.assertEqual(task.text, 'test task')
+
+        self.client.post(f'/todo/edit_task/{list_.id}', data={
+            'task_id': 1,
+            'text': 'test'
+        })
+
+        edited_task = Task.objects.first()
+        self.assertEqual(edited_task.text, 'test')
 
     def test_cannot_edit_task_from_other_list(self):
-        pass
+        list1 = List.objects.create()
+        list2 = List.objects.create()
+        Task.objects.create(list=list2, text='test task')
+
+        self.client.post(f'/todo/edit_task/{list1.id}', data={
+            'task_id': 1,
+            'text': 'test'
+        })
+
+        task = Task.objects.first()
+        self.assertNotEqual(task.text, 'test')
+        self.assertEqual(task.text, 'test task')
+
+    def test_edit_does_not_create_new_task(self):
+        list_ = List.objects.create()
+        Task.objects.create(list=list_, text='test task')
+        self.assertEqual(Task.objects.count(), 1)
+
+        self.client.post(f'/todo/edit_task/{list_.id}', data={
+            'task_id': 1,
+            'text': 'test'
+        })
+        self.assertEqual(Task.objects.count(), 1)
 
     def test_invalid_id_returns_error_message(self):
         pass
+
+
+class CompleteTaskTest(TestCase):
+
+    def test_completed_tasks_renders_completed_page(self):
+        list_ = List.objects.create()
+        response = self.client.get(f'/todo/completed_tasks/{list_.id}')
+        self.assertEquals(response.templates[0].name, 'completed.html')
+        self.assertTemplateUsed(response, 'completed.html')
+
+    def test_complete_creates_completed_object(self):
+        list_ = List.objects.create()
+        task = Task.objects.create(list=list_, text='test task')
+        self.assertEqual(Completed.objects.count(), 0)
+
+        self.client.post(f'/todo/complete/{task.id}', data={'complete': True})
+
+        self.assertEqual(Completed.objects.count(), 1)
+
+    def test_complete_makes_a_task_completed(self):
+        list_ = List.objects.create()
+        task = Task.objects.create(list=list_, text='test task')
+        self.assertEqual(task.complete, False)
+
+        self.client.post(f'/todo/complete/{task.id}', data={'complete': True})
+        changed_task = Task.objects.first()
+        self.assertEqual(changed_task.complete, True)
+
+    def test_complete_uncompletes_an_already_completed_task(self):
+        list_ = List.objects.create()
+        task = Task.objects.create(list=list_, text='test task')
+        completed = Completed.objects.create(text=task.text, task_id=task.id, list=list_)
+        task.complete = True
+        task.save()
+
+        self.client.post(f'/todo/complete/{task.id}')
+
+        changed_task = Task.objects.first()
+        self.assertEqual(changed_task.complete, False)
+
+    def test_complete_unchecking_box_deletes_completed_object(self):
+        list_ = List.objects.create()
+        task = Task.objects.create(list=list_, text='test task')
+        completed = Completed.objects.create(text=task.text, task_id=task.id, list=list_)
+        self.assertEqual(Completed.objects.count(), 1)
+
+        self.client.post(f'/todo/complete/{task.id}')
+        self.assertEqual(Completed.objects.count(), 0)

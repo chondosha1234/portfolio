@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 
@@ -90,20 +90,22 @@ def edit_task(request, list_id):
     return redirect('todo:view_list', list_id=list_id)
 
 
-def completed_tasks(request, list_id=None):
+def completed_tasks(request, list_id):
+    list_ = List.objects.get(id=list_id)
     tasks = Completed.objects.filter(list=list_id)
     context = {
         'tasks': tasks,
+        'list': list_
     }
     return render(request, 'completed.html', context)
 
 
 def complete(request, id):
-    task = Task.objects.get(pk=id)
+    task = Task.objects.get(id=id)
 
     if 'complete' in request.POST:
         task.complete = True
-        completed_task = Completed(description=task.description, task_id=id, list=task.list)
+        completed_task = Completed(text=task.text, task_id=id, list=task.list)
         completed_task.save()
     else:
         task.complete = False

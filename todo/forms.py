@@ -96,7 +96,7 @@ class CheckBoxForm(forms.ModelForm):
         self.id = kwargs.pop('id')
         self.complete = kwargs.pop('complete')
         super(CheckBoxForm, self).__init__(*args, **kwargs)
-        self.fields['complete'] = forms.BooleanField(label="", widget=forms.CheckboxInput(attrs={'onclick':'this.form.submit();'}), required=False)
+        self.fields['complete'] = forms.BooleanField(label="", widget=forms.CheckboxInput(attrs={'class': 'checkbox-btn', 'onclick':'this.form.submit();'}), required=False)
         if (self.complete):
             self.fields['complete'].initial = True
         else:

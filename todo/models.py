@@ -38,6 +38,6 @@ class Task(models.Model):
         return self.text
 
 class Completed(models.Model):
-    description = models.CharField(max_length=64)
+    text = models.CharField(max_length=64)
     task_id = models.IntegerField()
     list = models.ForeignKey(List, on_delete=models.CASCADE, default=None)
