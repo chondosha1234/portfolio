@@ -75,7 +75,7 @@ def delete_task(request, list_id):
         if task and task.list == list_:
             task.delete()
 
-    return HttpResponse(reverse('todo:view_list', args=[list_id]))
+    return redirect('todo:view_list', list_id=list_id)
 
 
 def edit_task(request, list_id):
@@ -86,8 +86,8 @@ def edit_task(request, list_id):
         if task and task.list == list_:
             task.text = request.POST['text']
             task.save()
-            
-    return HttpResponse(reverse('todo:view_list', args=[list_id]))
+
+    return redirect('todo:view_list', list_id=list_id)
 
 
 def completed_tasks(request, list_id=None):

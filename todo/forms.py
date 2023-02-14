@@ -18,7 +18,7 @@ class TaskForm(forms.models.ModelForm):
                 'id': 'add-item'
             }),
         }
-    
+
     def __init__(self, *args, **kwargs):
         super(TaskForm, self).__init__(*args, **kwargs)
         self.fields['text'].label = 'Add Task'
@@ -55,7 +55,7 @@ class DeleteForm(forms.Form):
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter ID to delete...',
-                'id': 'delete-item'
+                'id': 'delete-task'
             }
         )
     )
@@ -68,7 +68,8 @@ class EditForm(forms.Form):
         widget=forms.NumberInput(
             attrs={
                 'class': 'form-control',
-                'placeholder': 'Enter ID to edit...'
+                'placeholder': 'Enter ID to edit...',
+                'id': 'edit-task-id'
             }
         )
     )
@@ -78,7 +79,8 @@ class EditForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'placeholder': 'Enter new text...'
+                'placeholder': 'Enter new text...',
+                'id': 'edit-task-text'
             }
         )
     )

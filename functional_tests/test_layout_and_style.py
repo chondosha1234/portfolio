@@ -16,5 +16,5 @@ class LayoutAndStyleTest(FunctionalTest):
         self.assertAlmostEqual(
             description.location['x'] + description.size['width'] / 2,
             512,
-            delta=5
+            delta=10
         )

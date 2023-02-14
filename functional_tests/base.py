@@ -53,6 +53,10 @@ class FunctionalTest(StaticLiveServerTestCase):
         return self.browser.find_element(By.LINK_TEXT, link)
 
     @wait
+    def wait_for_element_id(self, id):
+        return self.browser.find_element(By.ID, id)
+
+    @wait
     def wait_for_row_in_table(self, row_text):
         page_text = self.browser.find_element(By.TAG_NAME, 'body').text
         self.assertIn(row_text, page_text)
@@ -63,5 +67,5 @@ class FunctionalTest(StaticLiveServerTestCase):
 
     def add_list_item(self, item_text):
         self.get_item_input_box().send_keys(item_text)
-        self.get_item_input_box().send_keys(Keys.ENTER)
+        self.wait_for_element_id('add-btn').send_keys(Keys.ENTER)
         self.wait_for_row_in_table(item_text)

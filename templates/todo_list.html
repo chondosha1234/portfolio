@@ -52,6 +52,7 @@
     <form action="{% if list %}{% url 'todo:view_list' list.id %}{% else %}{% url 'todo:new_list' %}{% endif %}" method="post">
       {% csrf_token %}
       {{ add_form }}
+      <button type="submit" id="add-btn" class="btn btn-primary btn-block mb-4">Add</button>
     </form>
   </div>
 
@@ -60,6 +61,7 @@
     <form action="{% url 'todo:edit_task' list.id %}" method="post">
       {% csrf_token %}
       {{ edit_form }}
+      <button type="submit" id="edit-btn" class="btn btn-primary btn-block mb-4">Edit</button>
     </form>
   </div>
 
@@ -67,6 +69,7 @@
     <form action="{% url 'todo:delete_task' list.id %}" method="post">
       {% csrf_token %}
       {{ delete_form }}
+      <button type="submit" id="delete-btn" class="btn btn-primary btn-block mb-4">Delete</button>
     </form>
   </div>
   {% endif %}
