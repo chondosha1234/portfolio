@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
-{% block extra_css %}
 {% load static %}
+
+{% block extra_css %}
 <link rel="stylesheet" type="text/css" href="{% static 'home_style.css' %}">
 {% endblock %}
 
@@ -28,8 +29,8 @@ and other software tools.
     <div class="card-container">
       <ul class="project-list">
         <li>
-            <div class="card" style="width:18rem">
-              <img src="#" class="card-img-top">
+            <div class="card" style="width:18rem; height:32rem">
+              <img src="{% static 'img/todolistimg.png' %}" class="card-img-top">
               <div class="card-body">
                 <h5 class="card-title">To Do List</h5>
                 <p class="card-text">
@@ -42,7 +43,7 @@ and other software tools.
         </li>
         <li>
 
-            <div class="card" style="width:18rem">
+            <div class="card" style="width:18rem; height:32rem">
               <img src="#" class="card-img-top">
               <div class="card-body">
                 <h5 class="card-title">Calendar</h5>
@@ -56,8 +57,8 @@ and other software tools.
           </li>
           <li>
 
-            <div class="card" style="width:18rem">
-              <img src="#" class="card-img-top">
+            <div class="card" style="width:18rem; height:32rem">
+              <img src="{% static 'img/tictactoeimg.png' %}" class="card-img-top">
               <div class="card-body">
                 <h5 class="card-title">Tic Tac Toe</h5>
                 <p class="card-text">

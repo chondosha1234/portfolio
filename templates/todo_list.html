@@ -17,18 +17,12 @@
 <br>
 
 <div class="page-select">
-  <button class='page-btn'>
     <a class="page-link" href="{% if list %}{% url 'todo:view_list' list.id %}{% else %}{% url 'todo:todo_list' %}{% endif %}"> Current Tasks </a>
-  </button>
   {% if list %}
-  <button class='page-btn'>
     <a class="page-link" href="{% url 'todo:completed_tasks' list.id %}"> Completed Tasks </a>
-  </button>
   {% endif %}
   {% if user.email %}
-  <button class='page-btn'>
     <a class="page-link" href="{% url 'todo:user_list' user.email %}"> My Lists </a>
-  </button>
   {% endif %}
 </div>
 
@@ -54,7 +48,9 @@
     <form action="{% if list %}{% url 'todo:view_list' list.id %}{% else %}{% url 'todo:new_list' %}{% endif %}" method="post">
       {% csrf_token %}
       {{ add_form }}
-      <button type="submit" id="add-btn" class="btn btn-primary btn-block mb-4">Add</button>
+      <div class="text-center">
+        <button type="submit" id="add-btn" class="btn btn-block mb-4">Add</button>
+      </div>
     </form>
   </div>
 
@@ -63,7 +59,9 @@
     <form action="{% url 'todo:edit_task' list.id %}" method="post">
       {% csrf_token %}
       {{ edit_form }}
-      <button type="submit" id="edit-btn" class="btn btn-primary btn-block mb-4">Edit</button>
+      <div class="text-center">
+        <button type="submit" id="edit-btn" class="btn btn-block mb-4">Edit</button>
+      </div>
     </form>
   </div>
 
@@ -71,7 +69,9 @@
     <form action="{% url 'todo:delete_task' list.id %}" method="post">
       {% csrf_token %}
       {{ delete_form }}
-      <button type="submit" id="delete-btn" class="btn btn-primary btn-block mb-4">Delete</button>
+      <div class="text-center">
+        <button type="submit" id="delete-btn" class="btn btn-block mb-4">Delete</button>
+      </div>
     </form>
   </div>
   {% endif %}

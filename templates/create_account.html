@@ -5,15 +5,27 @@
 {% endblock %}
 
 {% block body_content %}
+  <br>
   <div class="row">
     <form action="{% url 'accounts:create_account' %}" method="post">
       {% csrf_token %}
-      {{ form }}
-      <button type="submit" class="btn btn-primary btn-block mb-4">Sign up</button>
+      <div class="form-outline mb-4">
+          {{ form.email }}
+      </div>
+      <div class="form-outline mb-4">
+          {{ form.password }}
+      </div>
+      <div class="form-outline mb-4">
+          {{ form.confirm_password }}
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary btn-block mb-4">Sign up</button>
+      </div>
     </form>
 
     <div class="text-center">
-      <a href="{% url 'accounts:login' %}">Login</a>
+      <p>Already have an account? <a href="{% url 'accounts:login' %}">Login</a></p>
     </div>
   </div>
 {% endblock %}

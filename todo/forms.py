@@ -14,7 +14,7 @@ class TaskForm(forms.models.ModelForm):
         widgets = {
             'text': forms.fields.TextInput(attrs={
                 'placeholder': 'Enter a To Do Task',
-                'class': 'form-control input-lg',
+                'class': 'form-control',
                 'id': 'add-item'
             }),
         }

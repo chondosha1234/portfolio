@@ -1,12 +1,24 @@
 body {
-  background-color: #142d4c;
-  color: #ececec;
+  background-color: #5c5757;
+  color: #efecec;
   text-shadow: 1px 1px black;
 }
 
 a {
-  color: #ececec;
   text-decoration: none;
+  color: #62929a;
+}
+
+a:hover {
+  color: #efecec;
+}
+
+.row {
+  background-color: #363434;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 1px 1px black;
+  padding: 15px;
 }
 
 .page-container {
@@ -14,13 +26,26 @@ a {
 }
 
 .form-control {
-  color: #ececec;
-  background-color: #385170;
+  color: #efecec;
+  background-color: #5c5757;
   border-radius: 5px;
-  border: 1px solid black;
   outline: none;
   padding: 5px;
-  width: 30%;
+  margin-top: 10px;
+}
+
+.form-control::placeholder {
+  color: #efecec;
+}
+
+.btn {
+  background-color: #62929a !important;
+  color: #efecec !important;
+  border: 1px solid black;
+}
+
+.btn:hover {
+  border: 1px solid #62929a;
 }
 
 .help-text {

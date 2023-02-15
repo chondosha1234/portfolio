@@ -1,0 +1,30 @@
+body {
+  font-weight: bold;
+}
+
+.navbar {
+  background-color: #363434 !important;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  box-shadow: 1px 1px black;
+}
+
+.navbar-brand {
+  color: #efecec;
+}
+
+.navbar-brand:visited {
+  color: #efecec;
+}
+
+a {
+  color: #efecec;
+}
+
+a:visited {
+  color: #efecec;
+}
+
+a:hover {
+  color: #62929a;
+}

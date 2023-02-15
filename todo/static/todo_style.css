@@ -1,7 +1,8 @@
 body {
-  background-color: #343a40;
-  color: white;
-  text-shadow: 2px 2px black;
+  background-color: #6e5773;
+  color: #e9e2d0;
+  text-shadow: 1px 1px black;
+  font-weight: bold;
 }
 
 h2 {
@@ -18,7 +19,7 @@ label {
 .page-select {
   margin-left: auto;
   margin-right: auto;
-  width: 70%;
+  width: 30%;
   text-align: center;
 }
 
@@ -28,12 +29,25 @@ label {
 }
 
 .page-link {
-  color: white;
+  color: #363434;
+  background-color: #e9e2d0;
   text-decoration: none;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+  box-shadow: 1px 1px black;
+  font-weight: bold;
+  text-shadow: none;
 }
 
 .page-link:visited {
-  color: white;
+  color: #363434;
+  text-decoration: none;
+}
+
+.page-link:hover {
+  color: #e9e2d0;
+  background-color: #6e5773;
   text-decoration: none;
 }
 
@@ -47,7 +61,7 @@ label {
 .task-list {
   margin-right: auto;
   margin-left: auto;
-  width: 50%;
+  width: 70%;
 }
 
 .submit-btn {
@@ -62,4 +76,26 @@ label {
   width: 50%;
   text-align: left;
   padding: 10px;
+}
+
+.form-control {
+  background-color: #363434 !important;
+  color: #e9e2d0 !important;
+}
+
+.form-control::placeholder {
+  color: #e9e2d0 !important;
+}
+
+.btn {
+  background-color: #e9e2d0 !important;
+  color: #363434 !important;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+.btn:hover {
+  color: #e9e2d0 !important;
+  background-color: #6e5773 !important;
+  box-shadow: 1px 1px black;
 }

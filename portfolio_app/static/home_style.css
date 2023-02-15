@@ -1,19 +1,43 @@
 body {
-  background-color: #343a40;
-  color: white;
+  background-color: #5c5757;
+  color: #efecec;
+  font-size: 18px;
   text-shadow: 2px 2px black;
 }
 
+
 .card-body {
-  background-color: #343a40;
+  background-color: #363434;
 }
 
 .card-container {
   width: 100%;
 }
 
+.card-title {
+  font-weight: bold;
+}
+
+.card {
+  margin: 5px;
+  border: none;
+  box-shadow: 1px 1px black:
+}
+
 .project-list {
   list-style-type: none;
   display: flex;
   flex-wrap: wrap;
+}
+
+.btn {
+  background-color: #62929a !important;
+  color: #efecec !important;
+  border: 1px solid #efecec;
+}
+
+.btn:hover {
+  background-color: #5c5757 !important;
+  border: 1px solid #efecec;
+  color: #62929a;
 }
