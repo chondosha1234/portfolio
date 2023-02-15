@@ -4,7 +4,7 @@
 
   vars:
     project_dir: /home/{{user}}/sites/{{sitename}}
-    git_repo: https://github.com/chondosha1234/tdd_python.git
+    git_repo: https://github.com/chondosha1234/portfolio.git
 
   tasks:
 
@@ -63,14 +63,14 @@
     - name: make random key
       set_fact:
         random_key: "{{ lookup('password', '/dev/null chars=ascii_lowercase,digits length=50') }}"
-      when: key_register == 0
+      when: not key_register.found
 
     - name: add secret key
       lineinfile:
         state: present
         path: '{{ project_dir }}/.env'
         line: 'DJANGO_SECRET_KEY={{random_key}}'
-      when: key_register == 0
+      when: not key_register.found
 
     - name: add email password to dotenv
       lineinfile:
