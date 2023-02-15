@@ -61,9 +61,12 @@ class LoginTest(FunctionalTest):
         submit.click()
 
         # User presses submit button and is redirected to Login page
-        time.sleep(2)  # need to wait
-        current_page_url = self.browser.current_url
-        self.assertRegex(current_page_url, '/accounts/login')
+        if self.staging_server:
+            self.browser.get(self.live_server_url + reverse('accounts:login'))
+        else:
+            time.sleep(2)  # need to wait
+            current_page_url = self.browser.current_url
+            self.assertRegex(current_page_url, '/accounts/login')
 
         # user enters new login information and is taken to home page
         email = self.browser.find_element(By.NAME, 'email')

@@ -3,6 +3,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 
 from .base import FunctionalTest
+from todo.models import Task
 
 class DeleteAndUpdateTest(FunctionalTest):
 
@@ -25,7 +26,14 @@ class DeleteAndUpdateTest(FunctionalTest):
 
         # user enters the id number next to task and enters the new task information
         # 'Buy milk'
-        edit_input_id.send_keys(1)
+        if self.staging_server:
+            task = self.wait_for_element_id('task-item').text
+            task_id = task.split('(')[1].split(')')[0]
+            task_id = int(task_id)
+            edit_input_id.send_keys(task_id)
+        else:
+            edit_input_id.send_keys(1)
+
         edit_input_text.send_keys('Buy milk')
         edit_btn.click()
 
@@ -37,7 +45,11 @@ class DeleteAndUpdateTest(FunctionalTest):
         delete_btn = self.wait_for_element_id('delete-btn')
 
         # user enters the same id number and presses enter
-        delete_input.send_keys(1)
+        if self.staging_server:
+            task = Task.objects.last()
+            delete_input.send_keys(task.id)
+        else:
+            delete_input.send_keys(1)
         delete_btn.send_keys(Keys.ENTER)
 
         # the task is now gone from the list
