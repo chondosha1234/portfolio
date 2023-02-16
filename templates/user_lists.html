@@ -1,10 +1,30 @@
 {% extends 'base.html' %}
 
+{% block extra_css %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'todo_style.css' %}">
+{% endblock %}
+
 {% block body_content %}
-<h2>{{ owner.email }}'s lists</h2>
+<br>
+<div class="page-select">
+    <a class="page-link" href="{% url 'todo:todo_list' %}"> New List </a>
+  {% if list %}
+    <a class="page-link" href="{% url 'todo:completed_tasks' list.id %}"> Completed Tasks </a>
+  {% endif %}
+  {% if user.email %}
+    <a class="page-link" href="{% url 'todo:user_list' user.email %}"> My Lists </a>
+  {% endif %}
+</div>
+
+<br>
+
+<h2>Your lists</h2>
+<div class="text-center">
 <ul>
   {% for list in owner.list_set.all %}
     <li><a href="{{ list.get_absolute_url }}">{{ list.name }}</a></li>
   {% endfor %}
 </ul>
+</div>
 {% endblock %}

@@ -70,7 +70,13 @@ class CompletedTasksTest(FunctionalTest):
         delete_input = self.wait_for_element_id('delete-task')
         delete_btn = self.wait_for_element_id('delete-btn')
 
-        delete_input.send_keys(1)
+        if self.staging_server:
+            task = self.wait_for_element_id('task-item').text
+            task_id = task.split('(')[1].split(')')[0]
+            task_id = int(task_id)
+            delete_input.send_keys(task_id)
+        else:
+            delete_input.send_keys(1)
         delete_btn.send_keys(Keys.ENTER)
 
         time.sleep(2)
