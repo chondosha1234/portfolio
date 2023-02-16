@@ -24,8 +24,8 @@ def todo_list(request):
 def view_list(request, list_id):
     list_ = List.objects.get(id=list_id)
     add_form = ExistingListTaskForm(for_list=list_)
-    edit_form = EditForm()
-    delete_form = DeleteForm()
+    edit_form = EditForm(for_list=list_)
+    delete_form = DeleteForm(for_list=list_)
 
     if request.method == 'POST':
         add_form = ExistingListTaskForm(for_list=list_, data=request.POST)
@@ -69,7 +69,7 @@ def user_list(request, email):
 
 def delete_task(request, list_id):
     list_ = List.objects.get(id=list_id)
-    delete_form = DeleteForm(data=request.POST)
+    delete_form = DeleteForm(data=request.POST, for_list=list_)
     if delete_form.is_valid():
         task = Task.objects.get(id=request.POST['task_id'])
         if task and task.list == list_:
@@ -80,7 +80,7 @@ def delete_task(request, list_id):
 
 def edit_task(request, list_id):
     list_ = List.objects.get(id=list_id)
-    edit_form = EditForm(data=request.POST)
+    edit_form = EditForm(data=request.POST, for_list=list_)
     if edit_form.is_valid():
         task = Task.objects.get(id=request.POST['task_id'])
         if task and task.list == list_:

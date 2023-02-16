@@ -60,6 +60,18 @@ class DeleteForm(forms.Form):
         )
     )
 
+    def clean_task_id(self):
+        id = self.cleaned_data.get('task_id')
+        try:
+            Task.objects.filter(list=self.list).get(id=id)
+        except Task.DoesNotExist:
+            raise forms.ValidationError("Task id does not exist")
+        return id
+
+    def __init__(self, for_list, *args, **kwargs):
+        super(DeleteForm, self).__init__(*args, **kwargs)
+        self.list = for_list
+
 
 class EditForm(forms.Form):
 
@@ -84,6 +96,18 @@ class EditForm(forms.Form):
             }
         )
     )
+
+    def clean_task_id(self):
+        id = self.cleaned_data.get('task_id')
+        try:
+            Task.objects.filter(list=self.list).get(id=id)
+        except Task.DoesNotExist:
+            raise forms.ValidationError("Task id does not exist")
+        return id
+
+    def __init__(self, for_list, *args, **kwargs):
+        super(EditForm, self).__init__(*args, **kwargs)
+        self.list = for_list
 
 
 class CheckBoxForm(forms.ModelForm):

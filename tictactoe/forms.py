@@ -8,7 +8,8 @@ class NameForm(forms.Form):
             attrs={
                 'class': 'player',
                 'placeholder': 'Enter name...',
-                'size': '25'
+                'size': '25',
+                'id': 'textx'
             }
          )
     )
@@ -19,7 +20,8 @@ class NameForm(forms.Form):
             attrs={
                 'class': 'player',
                 'placeholder': 'Enter name...',
-                'size': '25'
+                'size': '25',
+                'id': 'texto'
             }
          )
     )

@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
+import time
 
 from .base import FunctionalTest
 
@@ -72,6 +73,7 @@ class CompletedTasksTest(FunctionalTest):
         delete_input.send_keys(1)
         delete_btn.send_keys(Keys.ENTER)
 
+        time.sleep(2)
         completed_btn = self.wait_for_element_link('Completed Tasks')
         completed_btn.click()
 
