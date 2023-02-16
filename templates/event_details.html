@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body_content %}
+<br>
 <div class="event-detail-container">
   <p name="title" class="event-detail">{{ event.title }}</p>
   <br>
@@ -12,8 +13,8 @@
   <br>
   <p name="start_end_times" class="event-detail">{{ event.start_time }} -- {{ event.end_time }}</p>
   <br>
-  <button class="btn"><a href="{% url 'cal:delete_event' event_id %}"> Delete </a></button>
+  <a class="btn btn-info right mr-2" href="{% url 'cal:delete_event' event_id %}"> Delete </a>
   <br>
-  <button class="btn"><a href="{% url 'cal:calendar' %}"> Return </a></button>
+  <a class="btn btn-info right mr-2" href="{% url 'cal:calendar' %}"> Return </a>
 </div>
 {% endblock %}

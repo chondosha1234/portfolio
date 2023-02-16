@@ -68,12 +68,7 @@ a {
   justify-content: space-between;
 }
 
-.prev-next-container {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  padding: 25px 0px 0px 10px;
-}
+
 
 .form-control {
   color: #ececec;
@@ -100,12 +95,13 @@ a {
   border: none;
   padding: 10px 10px;
   margin-top: 5px;
+  text-shadow: 1px 1px black;
 }
 
 .btn:hover {
   background-color: #142d4c;
-  border-color: #ececec;
-  border: 1px solid;
+  color: #ececec;
+  border: 1px solid #ececec;;
 }
 
 .event-detail-container {

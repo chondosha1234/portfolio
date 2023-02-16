@@ -15,12 +15,16 @@
     <form action="{% url 'cal:create_event' %}" method="post">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type="submit" class="btn btn-primary btn-block mb-4" name="submit-btn">Submit</button>
+      <div class="text-center">
+      <button type="submit" class="btn btn-info right mr-2" name="submit-btn">Submit</button>
+      </div>
     </form>
   </div>
 
   <div class="row">
-    <button class="btn"><a href="{% url 'cal:calendar' %}">Return</a></button>
+    <div class="col text-center">
+      <a class="btn btn-info right mr-2" href="{% url 'cal:calendar' %}">Return</a>
+    </div>
   </div>
 </div>
 
