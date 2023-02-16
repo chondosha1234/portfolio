@@ -16,14 +16,13 @@
 <div class="form-container">
  <form action="{% url 'ttt:main_page' %}" method="post">
   {% csrf_token %}
-  <label for="textx" id="labelx">Name for player X: </label>
-  <input class="player" id="textx" name="textx" type="text" size="25" placeholder="Enter name...">
+  {{ form.textx.label_tag }} {{ form.textx }}
   <br>
-  <label for="texto" id="labelo">Name for player O: </label>
-  <input class="player" id="texto" name="texto" type="text" size="25" placeholder="Enter name...">
-
+  {{ form.texto.label_tag }} {{ form.texto }}
   <br>
-
+  {% if form.errors %}
+  {{ form.errors }}
+  {% endif %}
   <input class="newgame-btn" type="submit" value="Start Game">
  </form>
 </div>

@@ -14,3 +14,5 @@ class TicTacToeViewsTest(TestCase):
         })
         self.assertEquals(response.templates[0].name, 'tictactoe.html')
         self.assertTemplateUsed(response, 'tictactoe.html')
+
+    

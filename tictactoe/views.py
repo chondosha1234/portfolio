@@ -1,22 +1,24 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from tictactoe.forms import NameForm
 
-# Create your views here.
 def main_page(request):
-    if 'textx' in request.POST:
+    form = NameForm(request.POST)
+
+    if form.is_valid():
         playerx = request.POST['textx']
-    else:
-        playerx = "X"
-
-    if 'texto' in request.POST:
         playero = request.POST['texto']
-    else:
-        playero = "O"
 
-    context = {
-        'playerx': playerx,
-        'playero': playero,
-    }
-    return render(request, 'tictactoe.html', context)
+        context = {
+            'playerx': playerx,
+            'playero': playero,
+        }
+        return render(request, 'tictactoe.html', context)
+    
+    return redirect('ttt:start_page')
 
 def start_page(request):
-    return render(request, 'tictactoe_start.html')
+    form = NameForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'tictactoe_start.html', context)
