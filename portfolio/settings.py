@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'accounts',
     'calendar_app',
     'tictactoe',
+    'calculator'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'

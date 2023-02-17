@@ -28,7 +28,6 @@ let playero = {
 let currentPlayer = playerx;
 
 
-
 function winningMessage() {
   return `Player ${currentPlayer.name} has won!`;
 }

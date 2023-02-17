@@ -29,45 +29,55 @@ and other software tools.
     <div class="card-container">
       <ul class="project-list">
         <li>
-            <div class="card" style="width:18rem; height:32rem">
-              <img src="{% static 'img/todolistimg.png' %}" class="card-img-top">
-              <div class="card-body">
-                <h5 class="card-title">To Do List</h5>
-                <p class="card-text">
-                  My version of a simple To Do List. It has options to sign in
-                  and create your own personalized list.
-                </p>
-                <a class="btn btn-primary" href="{% url 'todo:todo_list' %}">ToDo List</a>
-              </div>
+          <div class="card" style="width:18rem; height:32rem">
+            <img src="{% static 'img/todolistimg.png' %}" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">To Do List</h5>
+              <p class="card-text">
+                My version of a simple To Do List. It has options to sign in
+                and create your own personalized list.
+              </p>
+              <a class="btn btn-primary" href="{% url 'todo:todo_list' %}">ToDo List</a>
             </div>
+          </div>
         </li>
         <li>
-
-            <div class="card" style="width:18rem; height:32rem">
-              <img src="#" class="card-img-top">
-              <div class="card-body">
-                <h5 class="card-title">Calendar</h5>
-                <p class="card-text">
-                  A calendar app where you can sign in and create personalized
-                  events.
-                </p>
-                <a class="btn btn-primary" href="{% url 'cal:calendar' %}">Calendar</a>
-              </div>
+          <div class="card" style="width:18rem; height:32rem">
+            <img src="#" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">Calendar</h5>
+              <p class="card-text">
+                A calendar app where you can sign in and create personalized
+                events.
+              </p>
+              <a class="btn btn-primary" href="{% url 'cal:calendar' %}">Calendar</a>
             </div>
-          </li>
-          <li>
-
-            <div class="card" style="width:18rem; height:32rem">
-              <img src="{% static 'img/tictactoeimg.png' %}" class="card-img-top">
-              <div class="card-body">
-                <h5 class="card-title">Tic Tac Toe</h5>
-                <p class="card-text">
-                  The classic game tic tac toe. No sign is required. Just pick names
-                  for your players and start playing!
-                </p>
-                <a class="btn btn-primary" href="{% url 'ttt:start_page' %}">Tic Tac Toe</a>
-              </div>
+          </div>
+        </li>
+        <li>
+          <div class="card" style="width:18rem; height:32rem">
+            <img src="{% static 'img/tictactoeimg.png' %}" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">Tic Tac Toe</h5>
+              <p class="card-text">
+                The classic game tic tac toe. No sign is required. Just pick names
+                for your players and start playing!
+              </p>
+              <a class="btn btn-primary" href="{% url 'ttt:start_page' %}">Tic Tac Toe</a>
             </div>
+          </div>
+        </li>
+        <li>
+          <div class="card" style="width:18rem; height:32rem">
+            <img src="#" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">Calculator</h5>
+              <p class="card-text">
+                A calculator application created in javascript.
+              </p>
+              <a class="btn btn-primary" href="{% url 'calc:calculator' %}">Calculator</a>
+            </div>
+          </div>
         </li>
 
       </ul>

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'calculator_style.css' %}">
+{% endblock %}
+
+{% block body_content %}
+<div class="calculator">
+  <div class="calculator-display">0</div>
+  <div class="calculator-keys">
+
+    <button class="key-operator" data-action="add" id="add">+</button>
+    <button class="key-operator" data-action="subtract" id="subtract">-</button>
+    <button class="key-operator" data-action="multiply" id="multiply">&times;</button>
+    <button class="key-operator" data-action="divide" id="divide">/</button>
+    <button id="seven">7</button>
+    <button id="eight">8</button>
+    <button id="nine">9</button>
+    <button id="four">4</button>
+    <button id="five">5</button>
+    <button id="six">6</button>
+    <button id="one">1</button>
+    <button id="two">2</button>
+    <button id="three">3</button>
+    <button id="zero">0</button>
+    <button data-action="decimal" id="decimal">.</button>
+    <button data-action="clear" id="clear">AC</button>
+    <button class="key-equal" data-action="calculate">=</button>
+
+  </div>
+</div>
+
+<script src="{% static 'calculator.js' %}"></script>
+
+{% endblock %}
