@@ -5,6 +5,10 @@ body {
   text-shadow: 2px 2px black;
 }
 
+.project-list-header {
+  margin-bottom: 16px;
+  margin-left: 24px;
+}
 
 .card-body {
   background-color: #363434;
