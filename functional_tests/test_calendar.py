@@ -200,7 +200,8 @@ class CalendarTest(FunctionalTest):
 
         # user is on calendar page and presses logout and is redirected to login page
         self.assertRegex(self.browser.current_url, '/calendar/')
-        logout_btn = self.browser.find_element(By.LINK_TEXT, 'Log out')
+        self.wait_for_element_class('navbar-toggler').click()
+        logout_btn = self.wait_for_element_link('Log out')
         logout_btn.click()
         self.assertEqual(self.browser.current_url, self.live_server_url + reverse('home'))
 

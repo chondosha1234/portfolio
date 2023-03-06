@@ -51,16 +51,7 @@ class CreateAccountView(View):
             'form': form
         }
         return render(request, self.template_name, context)
-    """
-    def post2(self, request, *args, **kwargs):
-        if request.POST:
-            if not request.POST['password'] or not request.POST['confirm_password']:
-                return redirect('accounts:create_account')
-            else:
-                new_user = User.objects.create(email=request.POST['email'], password=request.POST['password'])
-                return redirect('accounts:login')
-        return render(request, 'create_account.html')
-   """
+
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():

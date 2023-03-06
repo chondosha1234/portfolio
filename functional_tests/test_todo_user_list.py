@@ -40,6 +40,7 @@ class UserListTest(FunctionalTest):
         self.wait_for_element_link('Do homework')
 
         # user logs out and goes back to To Do list page
+        self.wait_for_element_class('navbar-toggler').click()
         self.wait_for_element_link('Log out').click()
 
         # my lists option is gone
