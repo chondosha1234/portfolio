@@ -76,7 +76,7 @@
       lineinfile:
         path: '{{ project_dir }}/.env'
         regexp: '^EMAIL_PASSWORD'
-        line: 'EMAIL_PASSWORD=vpdqfkoygklezkab'
+        line: 'EMAIL_PASSWORD=ugdqnptkkahcbnzx'
 
     - name: update static files
       shell: ./virtualenv/bin/python manage.py collectstatic --noinput

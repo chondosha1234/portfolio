@@ -28,14 +28,14 @@
             </li>
             <li>
               {% if user.email %}
-              <a class="nav-link-active" href="{% url 'accounts:logout' %}">Log out</a>
+              <a class="nav-link-active" href="{% url 'logout' %}">Log out</a>
               {% else %}
-              <a class="nav-link-active" href="{% url 'accounts:login' %}">Login</a>
+              <a class="nav-link-active" href="{% url 'login' %}">Login</a>
               {% endif %}
             </li>
           </ul>
         </div>
-        
+
       </div>
     </nav>
     {% block body_content %}

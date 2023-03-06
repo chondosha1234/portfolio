@@ -13,6 +13,15 @@ a:hover {
   color: #efecec;
 }
 
+a:visited {
+  text-decoration: none;
+  color: #62929a;
+}
+
+a:visited:hover {
+  color: #efecec;
+}
+
 .row {
   background-color: #363434;
   border: 1px solid black;

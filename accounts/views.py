@@ -56,5 +56,5 @@ class CreateAccountView(View):
         form = self.form_class(request.POST)
         if form.is_valid():
             user = form.save()
-            return redirect('accounts:login')
-        return redirect('accounts:create_account')
+            return redirect('login')
+        return redirect('create_account')

@@ -32,7 +32,7 @@ def next_month(d):
 
 
 class CalendarView(LoginRequiredMixin, ListView):
-    login_url = 'accounts:login'
+    login_url = 'login'
     model = Event
     template_name = 'calendar.html'
 
@@ -48,7 +48,7 @@ class CalendarView(LoginRequiredMixin, ListView):
         return context
 
 
-@login_required(login_url='accounts:login')
+@login_required(login_url='login')
 def event_details(request, event_id):
     event = Event.objects.get(id=event_id)
     context = {
@@ -58,7 +58,7 @@ def event_details(request, event_id):
     return render(request, 'event_details.html', context)
 
 
-@login_required(login_url='accounts:login')
+@login_required(login_url='login')
 def create_event(request):
     if request.POST:
         form = EventForm(request.POST)
@@ -83,7 +83,7 @@ def create_event(request):
     return render(request, 'create_event.html', context)
 
 
-@login_required(login_url='accounts:login')
+@login_required(login_url='login')
 def delete_event(request, event_id):
     event = Event.objects.get(id=event_id)
     event.delete()
