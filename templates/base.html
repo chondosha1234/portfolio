@@ -27,6 +27,12 @@
               <a class="nav-link-active" aria-current="page" href="{% url 'home' %}">Home</a>
             </li>
             <li>
+              <a class="nav-link-active" href="{% url 'contact_me' %}">Contact Me</a>
+            </li>
+            <li>
+              <a class="nav-link-active" href="{% url 'about_me' %}">About Me</a>
+            </li>
+            <li>
               {% if user.email %}
               <a class="nav-link-active" href="{% url 'logout' %}">Log out</a>
               {% else %}

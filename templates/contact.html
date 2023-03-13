@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block body_content %}
+<h3>Contact Me</h3>
+<p>Send me a message and I will try to get back to you as soon as possible!</p>
+
+<form action="{% url 'contact_me' %}" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Send</button>
+</form>
+{% endblock %}
