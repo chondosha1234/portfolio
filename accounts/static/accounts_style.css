@@ -43,6 +43,13 @@ a:visited:hover {
   margin-top: 10px;
 }
 
+.form-control:focus {
+  color: #efecec;
+  background-color: #5c5757;
+  border: 1px solid #62929a;
+  box-shadow: 0 0 5px #62929a;
+}
+
 .form-control::placeholder {
   color: #efecec;
 }
