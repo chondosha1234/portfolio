@@ -1,0 +1,35 @@
+body {
+  background-color:  #000000;
+  color: #777777;
+  text-shadow: 1px 1px #333333;
+}
+
+.form-control {
+  background-color:  #444444;
+  border: 1px solid #333333;
+  color: #111111;
+}
+
+.form-control::placeholder {
+  color: #111111;
+}
+
+.form-control:focus {
+  color: #111111;
+  background-color:  #666666;
+  border: 1px solid #FF0000;
+  box-shadow: 0 0 2px #FF0000;
+}
+
+.text-submit {
+  background-color: #444444;
+  border-radius: 5px;
+  color: #111111;
+  padding: 5px;
+}
+
+.text-submit:hover {
+  background-color: #666666;
+  border: 1px solid #FF0000;
+  box-shadow: 0 0 2px #FF0000;
+}

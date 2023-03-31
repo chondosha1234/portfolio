@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'accounts',
     'calendar_app',
     'tictactoe',
-    'calculator'
+    'calculator',
+    'russian_stress'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'

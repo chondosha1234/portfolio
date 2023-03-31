@@ -24,8 +24,8 @@ class VisitorTest(FunctionalTest):
 
         # under my information there are several links to apps and websites
         # I have created
-        mini_projects = self.browser.find_element(By.CLASS_NAME, 'project-list').text
-        self.assertIn("ToDo List", mini_projects)
+        projects = self.browser.find_element(By.CLASS_NAME, 'project-list').text
+        self.assertIn("Issue Tracker", projects)
 
         # at the top of the page is a navigation bar with options
         # home, apps, about, account, logout

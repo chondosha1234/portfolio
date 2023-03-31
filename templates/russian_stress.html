@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block extra_css %}
+{% load static %}
+<link href="{% static 'russiantext_style.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block body_content %}
+<div class="container">
+  <div class="row">
+    <div class="description-text">
+    <h3>Russian Pronunciation Stress Adder</h3>
+    <br>
+    <p>
+      For students of a foreign language, especially Russian, it is important to know where the stress
+      in a word is, in order to pronounce the word correctly.  During my time studying Russian it was
+      common to have learning resources which added a little stress mark about the correct vowel letter
+      so as to help the reader understand the pronunciation. In most real world russian text, whether
+      that be in a printed book or newspaper, or an online source such as a blog, subtitles, or
+      news article, these stress markings are not shown.
+    </p>
+    <p>
+      This application will take an input text in Russian, and return the same text with added stress
+      marks.  It utilizes wiktionary in order to find the words and add the stress marking to it.  There
+      some limitations to this.  Some words, especially names and slang, will not be found and be left
+      without a stress marking.  Also there are some cases where 2 words are spelled the same, but are
+      pronounced differently and have different stressed syllables. These words will be left without a
+      marking in order to avoid incorrect results.
+    </p>
+    <p>
+      In the future, I may expand on this idea and try to use machine learning to analyze sentences in context
+      in order to know which of these words is correct for that situation.
+    </p>
+    <p>
+      If you enter a large text, please be prepared to wait some time for a result.
+      Thanks, and if you have any questions or comments, please go the contact me page and let me know.
+    </p>
+    </div>
+  </div>
+
+  <div class="row">
+  <form action="{% url 'russian:change_text' %}" method="post" id="text-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="text-center">
+      <button class="text-submit" type="submit" id="text-submit">Submit</button>
+    </div>
+  </form>
+  </div>
+
+  <br>
+
+  <div class="row">
+  <div class="loading-div" id="loading" style="display: none;">
+    <p>Loading...</p>
+    <p>This may take a few moments, depending on the size of the text</p>
+  </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <p class="russian-text">{{ text }}</p>
+  </div>
+
+</div>
+
+<script src="{% static 'loading.js' %}"></script>
+{% endblock %}

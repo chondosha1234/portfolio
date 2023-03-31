@@ -23,5 +23,6 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('calendar/', include('calendar_app.urls')),
     path('tictactoe/', include('tictactoe.urls')),
-    path('calculator/', include('calculator.urls'))
+    path('calculator/', include('calculator.urls')),
+    path('russian_stress/', include('russian_stress.urls'))
 ]
